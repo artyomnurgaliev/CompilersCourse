@@ -12,9 +12,9 @@ void PrintVisitor::Visit(NumberExpression* expression) {
     stream_ << "NumExpression " << expression->value_ << std::endl;
 }
 
-void PrintVisitor::Visit(AddExpression* expression) {
+void PrintVisitor::Visit(BinaryOperatorExpression * expression) {
     PrintTabs();
-    stream_ << "AddExpression is:" << std::endl;
+    stream_ << "BinaryOperatorExpression is:" << std::endl;
 
     ++num_tabs_;
     expression->first->Accept(this);

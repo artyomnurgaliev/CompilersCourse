@@ -23,7 +23,7 @@
 %}
 
 id    [a-zA-Z][a-zA-Z_0-9]*
-int   [0-9]+
+int   [-][0-9]+
 blank [ \t\r]
 
 %{
@@ -41,16 +41,43 @@ blank [ \t\r]
 {blank}+   loc.step ();
 \n+        loc.lines (yyleng); loc.step ();
 
-"-"        {
-              std::cout << loc.begin.line << " " << loc.end.line << std::endl;
-              return yy::parser::make_MINUS  (loc);
-           }
+"System.out.println"      return yy::parser::make_SOUT  (loc);
+"public static void main" return yy::parser::make_PSVM  (loc);
+
+"assert"   return yy::parser::make_ASSERT (loc);
+"return"   return yy::parser::make_RETURN (loc);
+"true"     return yy::parser::make_TRUE   (loc);
+"false"    return yy::parser::make_FALSE  (loc);
+"new"      return yy::parser::make_NEW    (loc);
+"this"     return yy::parser::make_THIS   (loc);
+"{"        return yy::parser::make_LBRACE (loc);
+"}"        return yy::parser::make_RBRACE (loc);
+"int"      return yy::parser::make_INT    (loc);
+"boolean"  return yy::parser::make_BOOLEAN(loc);
+"void"     return yy::parser::make_VOID   (loc);
+";"        return yy::parser::make_SEMICOLON (loc);
+"="        return yy::parser::make_ASSIGN (loc);
+"class"    return yy::parser::make_CLASS  (loc);
+"extends"  return yy::parser::make_EXTENDS(loc);
+"public"   return yy::parser::make_PUBLIC (loc);
+"length"   return yy::parser::make_LENGTH (loc);
+"if"       return yy::parser::make_IF     (loc);
+"else"     return yy::parser::make_ELSE   (loc);
+"while"    return yy::parser::make_WHILE  (loc);
+"."        return yy::parser::make_DOT    (loc);
+"!"        return yy::parser::make_NOT    (loc);
+"&&"       return yy::parser::make_AND    (loc);
+"||"       return yy::parser::make_OR     (loc);
+"<"        return yy::parser::make_LESS   (loc);
+">"        return yy::parser::make_GREATER(loc);
+"=="       return yy::parser::make_EQUAL  (loc);
+"-"        return yy::parser::make_MINUS  (loc);
 "+"        return yy::parser::make_PLUS   (loc);
 "*"        return yy::parser::make_STAR   (loc);
 "/"        return yy::parser::make_SLASH  (loc);
+"%"        return yy::parser::make_PERCENT(loc);
 "("        return yy::parser::make_LPAREN (loc);
 ")"        return yy::parser::make_RPAREN (loc);
-":="       return yy::parser::make_ASSIGN (loc);
 
 {int}      return make_NUMBER(yytext, loc);
 {id}       return yy::parser::make_IDENTIFIER(yytext, loc);

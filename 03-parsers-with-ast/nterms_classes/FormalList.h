@@ -1,0 +1,13 @@
+//
+// Created by artyom on 15.03.2020.
+//
+
+#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_FORMALLIST_H_
+#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_FORMALLIST_H_
+
+class FormalList {
+  void AddFormal();
+
+};
+
+#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_FORMALLIST_H_

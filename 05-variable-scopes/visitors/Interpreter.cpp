@@ -30,7 +30,7 @@ void Interpreter::Visit(NumberExpression* expression) {
     tos_value_ = expression->value_;
 }
 
-void Interpreter::Visit(AddExpression* expression) {
+void Interpreter::Visit(BinaryOperatorExpression * expression) {
     tos_value_ = Accept(expression->first) + Accept(expression->second);
 }
 

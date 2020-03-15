@@ -2,7 +2,7 @@
 
 class Expression;
 class NumberExpression;
-class AddExpression;
+class BinaryOperatorExpression;
 class SubstractExpression;
 class MulExpression;
 class DivExpression;

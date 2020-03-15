@@ -1,0 +1,13 @@
+//
+// Created by artyom on 15.03.2020.
+//
+
+#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_STATEMENTLIST_H_
+#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_STATEMENTLIST_H_
+
+#include "Statement.h"
+class StatementList {
+  void AddStatement(Statement* statement);
+};
+
+#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_STATEMENTLIST_H_

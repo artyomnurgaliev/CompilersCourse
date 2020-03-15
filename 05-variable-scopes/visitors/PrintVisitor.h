@@ -10,7 +10,7 @@ class PrintVisitor: public Visitor {
     PrintVisitor(const std::string& filename);
     ~PrintVisitor();
     void Visit(NumberExpression* expression) override;
-    void Visit(AddExpression* expression) override;
+    void Visit(BinaryOperatorExpression * expression) override;
     void Visit(SubstractExpression* expression) override;
     void Visit(MulExpression* expression) override;
     void Visit(DivExpression* expression) override;

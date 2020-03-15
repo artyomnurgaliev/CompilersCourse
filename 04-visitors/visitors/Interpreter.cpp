@@ -15,7 +15,7 @@ void Interpreter::Visit(NumberExpression* expression) {
     SetTosValue(expression->value_);
 }
 
-void Interpreter::Visit(AddExpression* expression) {
+void Interpreter::Visit(BinaryOperatorExpression * expression) {
     int value = 0;
     expression->first->Accept(this);
     value += tos_value_;

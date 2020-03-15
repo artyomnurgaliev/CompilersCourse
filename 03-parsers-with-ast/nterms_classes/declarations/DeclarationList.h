@@ -1,0 +1,13 @@
+//
+// Created by artyom on 15.03.2020.
+//
+
+#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATIONLIST_H_
+#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATIONLIST_H_
+
+#include "Declaration.h"
+class DeclarationList {
+  void AddDeclaration(Declaration* declaration);
+};
+
+#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATIONLIST_H_

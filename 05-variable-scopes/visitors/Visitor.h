@@ -5,7 +5,7 @@
 class Visitor {
  public:
     virtual void Visit(NumberExpression* expression) = 0;
-    virtual void Visit(AddExpression* expression) = 0;
+    virtual void Visit(BinaryOperatorExpression * expression) = 0;
     virtual void Visit(SubstractExpression* expression) = 0;
     virtual void Visit(MulExpression* expression) = 0;
     virtual void Visit(DivExpression* expression) = 0;
