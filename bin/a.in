@@ -1,3 +1,13 @@
-three := 3
-seven := one + two * three
-seven * seven
+class Test {
+  public static void main () {
+    int a;
+    int b;
+    b = 5;
+    a = 1 + b + (b * b);
+    System.out.println(a);
+    a = a * 2;
+    a = a * a;
+    System.out.println(a);
+    return 0;
+  }
+}
