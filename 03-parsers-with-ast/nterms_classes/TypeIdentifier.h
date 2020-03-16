@@ -1,10 +1,11 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
+#include <string>
+class TypeIdentifier {
+public:
+  explicit TypeIdentifier(std::string identifier);
+  std::string GetIdentifier();
+private:
+  std::string identifier_;
+};
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_TYPEIDENTIFIER_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_TYPEIDENTIFIER_H_
 
-class TypeIdentifier {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_TYPEIDENTIFIER_H_

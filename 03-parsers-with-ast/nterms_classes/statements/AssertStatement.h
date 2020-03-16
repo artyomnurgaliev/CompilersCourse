@@ -1,10 +1,13 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_ASSERTSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_ASSERTSTATEMENT_H_
 
-class AssertStatement {};
+#include "Statement.h"
+#include <nterms_classes/expressions/Expression.h>
+class AssertStatement : public Statement {
+public:
+  AssertStatement(Expression* expression);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_ASSERTSTATEMENT_H_
+private:
+  Expression* expression_;
+};
+

@@ -1,5 +1,4 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "Declaration.h"
+Declaration::Declaration(DeclarationClass *declaration_class) : declaration_class_(declaration_class) {}

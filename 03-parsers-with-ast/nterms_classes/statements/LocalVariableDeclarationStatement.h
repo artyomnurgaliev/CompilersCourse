@@ -1,10 +1,11 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_LOCALVARIABLEDECLARATIONSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_LOCALVARIABLEDECLARATIONSTATEMENT_H_
+#include "Statement.h"
+#include <nterms_classes/LocalVariableDeclaration.h>
+class LocalVariableDeclarationStatement : public Statement{
+public:
+  LocalVariableDeclarationStatement(LocalVariableDeclaration* local_variable_declaration);
 
-class LocalVariableDeclarationStatement {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_LOCALVARIABLEDECLARATIONSTATEMENT_H_
+private:
+  LocalVariableDeclaration* local_variable_declaration_;
+};

@@ -1,10 +1,16 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_VARIABLEDECLARATION_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_VARIABLEDECLARATION_H_
 
-class VariableDeclaration {};
+#include "DeclarationClass.h"
+#include <nterms_classes/type/Type.h>
+#include <string>
+class VariableDeclaration : public DeclarationClass {
+public:
+  VariableDeclaration(Type* type, std::string identifier);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_VARIABLEDECLARATION_H_
+private:
+  Type* type_;
+  std::string identifier_;
+};
+
+

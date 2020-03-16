@@ -1,5 +1,6 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "StatementList.h"
+void StatementList::AddStatement(Statement *statement) {
+  statements_.push_back(statement);
+}

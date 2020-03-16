@@ -1,10 +1,10 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
+#include "TypeClass.h"
+class Type {
+public:
+  Type(TypeClass* type_class);
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_TYPE_TYPE_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_TYPE_TYPE_H_
+private:
+  TypeClass* type_class_;
+};
 
-class Type {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_TYPE_TYPE_H_

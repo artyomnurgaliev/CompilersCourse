@@ -1,10 +1,18 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_METHODDECLARATION_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_METHODDECLARATION_H_
 
-class MethodDeclaration {};
+#include "DeclarationClass.h"
+#include <nterms_classes/FormalList.h>
+#include <nterms_classes/statements/StatementList.h>
+class MethodDeclaration :public DeclarationClass {
+public:
+  MethodDeclaration(Type* type, std::string identifier, FormalList* formals, StatementList* statements);
+  MethodDeclaration(Type* type, std::string identifier, StatementList* statements);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_METHODDECLARATION_H_
+private:
+  Type* type_;
+  std::string identifier_;
+  FormalList* formals_{};
+  StatementList* statements_;
+};
+

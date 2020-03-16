@@ -1,10 +1,11 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATION_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATION_H_
 
-class Declaration {};
+#include "DeclarationClass.h"
+class Declaration {
+public:
+  Declaration(DeclarationClass* declaration_class);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATION_H_
+private:
+  DeclarationClass* declaration_class_;
+};

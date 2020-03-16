@@ -1,5 +1,4 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "ArrayType.h"
+ArrayType::ArrayType(SimpleType *simple_type) : simple_type_(simple_type) {}

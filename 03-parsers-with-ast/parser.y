@@ -160,7 +160,7 @@ statements:
 
 statement:
     	"assert" "(" expr ")" ";" { $$ = new AssertStatement($3); } |
-        local_variable_declaration { $$ = new LocalVariableDeclarationStatement(); } |
+        local_variable_declaration { $$ = new LocalVariableDeclarationStatement($1); } |
         "{" statements "}" { $$ = new ScopeStatement($2); } |
         "if"  "(" expr ")" statement { $$ = new IfStatement($3, $5); } |
         "if"  "(" expr ")" statement "else" statement { $$ = new IfElseStatement($3, $5, $7); } |

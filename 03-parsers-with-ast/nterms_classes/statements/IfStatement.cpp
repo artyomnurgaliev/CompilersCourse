@@ -3,3 +3,5 @@
 //
 
 #include "IfStatement.h"
+IfStatement::IfStatement(Expression *expression, Statement *statement)
+    : expression_(expression), statement_(statement) {}

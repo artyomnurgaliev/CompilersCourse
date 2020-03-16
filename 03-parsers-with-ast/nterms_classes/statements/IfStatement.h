@@ -1,10 +1,15 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_IFSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_IFSTATEMENT_H_
 
-class IfStatement {};
+#include "Statement.h"
+#include <nterms_classes/expressions/Expression.h>
+class IfStatement : public Statement {
+public:
+  IfStatement(Expression* expression, Statement* statement);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_IFSTATEMENT_H_
+private:
+  Expression* expression_;
+  Statement* statement_;
+};
+
+

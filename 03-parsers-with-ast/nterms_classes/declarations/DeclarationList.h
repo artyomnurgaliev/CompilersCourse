@@ -1,13 +1,12 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATIONLIST_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATIONLIST_H_
-
+#include <vector>
 #include "Declaration.h"
 class DeclarationList {
+public:
   void AddDeclaration(Declaration* declaration);
+
+private:
+  std::vector<Declaration*> declarations_;
 };
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_DECLARATIONS_DECLARATIONLIST_H_

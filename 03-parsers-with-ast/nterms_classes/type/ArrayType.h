@@ -1,10 +1,11 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_ARRAYTYPE_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_ARRAYTYPE_H_
+#include "SimpleType.h"
+class ArrayType : public TypeClass {
+public:
+  explicit ArrayType(SimpleType* simple_type);
 
-class ArrayType {};
+private:
+  SimpleType* simple_type_;
+};
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_ARRAYTYPE_H_

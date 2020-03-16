@@ -1,10 +1,13 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_ASSIGNMENTSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_ASSIGNMENTSTATEMENT_H_
 
-class AssignmentStatement {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_ASSIGNMENTSTATEMENT_H_
+#include "Statement.h"
+#include <nterms_classes/Lvalue/Lvalue.h>
+#include <nterms_classes/expressions/Expression.h>
+class AssignmentStatement : public Statement {
+public:
+  AssignmentStatement(Lvalue* lvalue, Expression* expression);
+private:
+  Lvalue* lvalue_;
+  Expression* expression_;
+};

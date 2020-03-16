@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include "Lvalue.h"
 #include <nterms_classes/expressions/Expression.h>

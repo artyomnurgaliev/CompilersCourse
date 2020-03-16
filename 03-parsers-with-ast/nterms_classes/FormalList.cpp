@@ -3,3 +3,9 @@
 //
 
 #include "FormalList.h"
+
+#include <utility>
+void FormalList::AddFormal(Type *type, std::string identifier) {
+  formals_.emplace_back(type, std::move(identifier));
+}
+

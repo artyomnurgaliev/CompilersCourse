@@ -1,10 +1,10 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_SOUTSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_SOUTSTATEMENT_H_
-
-class SoutStatement {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_SOUTSTATEMENT_H_
+#include "Statement.h"
+#include <nterms_classes/expressions/Expression.h>
+class SoutStatement : public Statement {
+public:
+  SoutStatement(Expression* expression);
+private:
+  Expression* expression_;
+};

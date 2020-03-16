@@ -1,10 +1,12 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_SCOPESTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_SCOPESTATEMENT_H_
+#include "StatementList.h"
+class ScopeStatement: public Statement {
+public:
+  ScopeStatement(StatementList* statement_list);
 
-class ScopeStatement {};
+private:
+  StatementList* statement_list_;
+};
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_SCOPESTATEMENT_H_
+

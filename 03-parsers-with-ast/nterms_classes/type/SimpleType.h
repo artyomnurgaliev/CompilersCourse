@@ -1,10 +1,14 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
+#include "TypeClass.h"
+#include <nterms_classes/TypeIdentifier.h>
+#include <string>
+class SimpleType : public TypeClass {
+public:
+  explicit SimpleType(std::string simple_type_identifier);
+  explicit SimpleType(TypeIdentifier* type_identifier);
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_SIMPLETYPE_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_SIMPLETYPE_H_
+private:
+  std::string simple_type_identifier_;
+};
 
-class SimpleType {};
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_SIMPLETYPE_H_

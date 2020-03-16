@@ -1,10 +1,10 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
+#include <nterms_classes/declarations/VariableDeclaration.h>
+class LocalVariableDeclaration {
+public:
+  LocalVariableDeclaration(VariableDeclaration* variable_declaration);
+private:
+  VariableDeclaration* variable_declaration_;
+};
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_LOCALVARIABLEDECLARATION_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_LOCALVARIABLEDECLARATION_H_
 
-class LocalVariableDeclaration {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_LOCALVARIABLEDECLARATION_H_

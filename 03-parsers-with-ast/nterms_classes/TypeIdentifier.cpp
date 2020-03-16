@@ -1,5 +1,6 @@
-//
-// Created by artyom on 15.03.2020.
-//
-
 #include "TypeIdentifier.h"
+
+#include <utility>
+TypeIdentifier::TypeIdentifier(std::string identifier)
+    : identifier_(std::move(identifier)) {}
+std::string TypeIdentifier::GetIdentifier() { return identifier_; }

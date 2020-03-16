@@ -1,3 +1,4 @@
+#pragma once
 
 #include "Expression.h"
 #include <nterms_classes/MethodInvocation.h>

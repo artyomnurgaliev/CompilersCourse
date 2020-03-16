@@ -1,10 +1,13 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_WHILESTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_WHILESTATEMENT_H_
 
-class WhileStatement {};
+#include "Statement.h"
+#include <nterms_classes/expressions/Expression.h>
+class WhileStatement : public Statement {
+public:
+  WhileStatement(Expression* expression, Statement* statement);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_WHILESTATEMENT_H_
+private:
+  Expression* expression_;
+  Statement* statement_;
+};

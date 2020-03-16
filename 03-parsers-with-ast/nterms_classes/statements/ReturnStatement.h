@@ -1,10 +1,13 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_RETURNSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_RETURNSTATEMENT_H_
+#include "Statement.h"
+#include <nterms_classes/expressions/Expression.h>
+class ReturnStatement : public Statement {
+public:
+  ReturnStatement(Expression* expression);
 
-class ReturnStatement {};
+private:
+  Expression* expression_;
+};
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_RETURNSTATEMENT_H_
+

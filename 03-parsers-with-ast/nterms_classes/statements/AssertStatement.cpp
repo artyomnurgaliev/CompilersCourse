@@ -3,3 +3,5 @@
 //
 
 #include "AssertStatement.h"
+AssertStatement::AssertStatement(Expression *expression)
+    : expression_(expression) {}

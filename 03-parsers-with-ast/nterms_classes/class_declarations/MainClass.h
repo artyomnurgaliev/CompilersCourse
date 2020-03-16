@@ -1,10 +1,13 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_NTERMS_CLASSES_MAINCLASS_H_
-#define COMPILERS_03_PARSERS_WITH_AST_NTERMS_CLASSES_MAINCLASS_H_
+#include <nterms_classes/statements/StatementList.h>
+#include <string>
+class MainClass {
+public:
+  MainClass(std::string identifier, StatementList* statement_list);
+private:
+  std::string identifier_;
+  StatementList* statement_list_;
+};
 
-class MainClass {};
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_NTERMS_CLASSES_MAINCLASS_H_

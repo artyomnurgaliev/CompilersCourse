@@ -1,5 +1,4 @@
-//
-// Created by artyom on 15.03.2020.
-//
 
 #include "WhileStatement.h"
+WhileStatement::WhileStatement(Expression *expression, Statement *statement)
+    : expression_(expression), statement_(statement) {}

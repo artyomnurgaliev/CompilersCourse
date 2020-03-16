@@ -1,10 +1,14 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_METHODINVOCATIONSTATEMENT_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_METHODINVOCATIONSTATEMENT_H_
 
-class MethodInvocationStatement {};
+#include "Statement.h"
+#include <nterms_classes/MethodInvocation.h>
+class MethodInvocationStatement : public Statement{
+public:
+  explicit MethodInvocationStatement(MethodInvocation* method_invocation);
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_STATEMENTS_METHODINVOCATIONSTATEMENT_H_
+private:
+  MethodInvocation* method_invocation_;
+};
+
+

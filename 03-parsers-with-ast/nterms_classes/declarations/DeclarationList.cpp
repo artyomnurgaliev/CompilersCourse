@@ -1,5 +1,6 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "DeclarationList.h"
+void DeclarationList::AddDeclaration(Declaration *declaration) {
+  declarations_.push_back(declaration);
+}

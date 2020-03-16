@@ -1,5 +1,7 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "VariableDeclaration.h"
+
+#include <utility>
+VariableDeclaration::VariableDeclaration(Type *type, std::string identifier)
+    : type_(type), identifier_(std::move(identifier)) {}

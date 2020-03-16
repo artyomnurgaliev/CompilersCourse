@@ -1,10 +1,17 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
+#include "expressions/Expression.h"
+#include <nterms_classes/expressions/ExpressionList.h>
+#include <string>
+class MethodInvocation {
+public:
+  MethodInvocation(Expression* expression, std::string identifier);
+  MethodInvocation(Expression* expression, std::string identifier, Expression* first, ExpressionList* expression_list);
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_CLASSES_METHODINVOCATION_H_
-#define COMPILERS_03_PARSERS_WITH_AST_CLASSES_METHODINVOCATION_H_
+private:
+  Expression* expression_;
+  std::string identifier_;
+  Expression* first_{};
+  ExpressionList* expression_list_{};
+};
 
-class MethodInvocation {};
 
-#endif // COMPILERS_03_PARSERS_WITH_AST_CLASSES_METHODINVOCATION_H_

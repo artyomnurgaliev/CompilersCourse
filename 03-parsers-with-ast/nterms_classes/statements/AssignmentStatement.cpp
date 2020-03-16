@@ -1,5 +1,5 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "AssignmentStatement.h"
+AssignmentStatement::AssignmentStatement(Lvalue *lvalue, Expression *expression)
+    : lvalue_(lvalue), expression_(expression) {}

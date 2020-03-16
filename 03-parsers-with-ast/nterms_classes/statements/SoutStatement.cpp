@@ -1,5 +1,5 @@
-//
-// Created by artyom on 15.03.2020.
-//
+
 
 #include "SoutStatement.h"
+SoutStatement::SoutStatement(Expression *expression)
+    : expression_(expression) {}

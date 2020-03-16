@@ -1,10 +1,13 @@
-//
-// Created by artyom on 15.03.2020.
-//
+#pragma once
+#include <string>
+#include <nterms_classes/declarations/DeclarationList.h>
+class ClassDeclaration {
+public:
+  ClassDeclaration(std::string identifier, DeclarationList* declaration_list);
+  ClassDeclaration(std::string identifier, std::string extends_identifier, DeclarationList* declaration_list);
+private:
+  std::string identifier_;
+  std::string extends_identifier_;
+  DeclarationList* declaration_list_;
+};
 
-#ifndef COMPILERS_03_PARSERS_WITH_AST_NTERMS_CLASSES_CLASS_DECLARATIONS_CLASSDECLARATION_H_
-#define COMPILERS_03_PARSERS_WITH_AST_NTERMS_CLASSES_CLASS_DECLARATIONS_CLASSDECLARATION_H_
-
-class ClassDeclaration {};
-
-#endif // COMPILERS_03_PARSERS_WITH_AST_NTERMS_CLASSES_CLASS_DECLARATIONS_CLASSDECLARATION_H_
