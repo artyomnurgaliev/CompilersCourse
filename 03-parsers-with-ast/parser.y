@@ -8,6 +8,7 @@
 
 %code requires {
     #include <string>
+    #include "forward_decl.h"
     class Scanner;
     class Driver;
 }
@@ -20,7 +21,7 @@
 %code {
     #include "driver.hh"
     #include "location.hh"
-
+    #include "elements.h"
     static yy::parser::symbol_type yylex(Scanner &scanner, Driver& driver) {
         return scanner.ScanToken();
     }
@@ -109,14 +110,14 @@ program:
     main_class class_declarations { $$ = new Program($1, $2); };
 
 main_class:
-    "class" "identifier" "{" "public static void main" "(" ")" "{" statements "}" "}" { $$ = new MainClass($2, $11); };
+    "class" "identifier" "{" "public static void main" "(" ")" "{" statements "}" "}" { $$ = new MainClass($2, $8); };
 
 class_declarations:
 	%empty { $$ = new ClassDeclarationList(); } | class_declarations class_declaration {  $1->AddClassDeclaration($2); $$ = $1; };
 
 class_declaration:
     "class" "identifier" "{" declarations "}" { $$ = new ClassDeclaration($2, $4); } |
-    "class" "identifier" "extends" "identifier" "{" declarations "}" { $$ = new ClassExtendsDeclaration($2, $4, $6); };
+    "class" "identifier" "extends" "identifier" "{" declarations "}" { $$ = new ClassDeclaration($2, $4, $6); };
 
 declarations:
     %empty { $$ = new DeclarationList();  } |
@@ -143,9 +144,9 @@ type:
 	simple_type { $$ = new Type($1); } | array_type { $$ = new Type($1); };
 
 simple_type:
-    "int" { $$ = new SimpleType($1); } |
-    "boolean" { $$ = new SimpleType($1); } |
-    "void" { $$ = new SimpleType($1); } |
+    "int" { $$ = new SimpleType("int"); } |
+    "boolean" { $$ = new SimpleType("boolean"); } |
+    "void" { $$ = new SimpleType("void"); } |
      type_identifier { $$ = new SimpleType($1);};
 
 array_type:
@@ -197,23 +198,23 @@ expr:
         "!" expr { $$ = new NotExpression($2); } |
         "(" expr ")" { $$ = new ParenthesisExpression($2); } |
         "identifier" { $$ = new IdentExpression($1); } | "number" { $$ = new NumberExpression($1); } |
-        "this" { $$ = new ThisExpression(); } | "true" { $$ = true; } | "false" { $$ = false; } |
+        "this" { $$ = new ThisExpression(); } | "true" { $$ = new BoolExpression(true); } | "false" { $$ = new BoolExpression(false); } |
         method_invocation { $$ = new MethodInvocationExpression($1); };
 
 %left "+" "-";
 %left "*" "/" "%";
 
 binary_operator:
-	"&&" { $$ = BinaryOperator($1); }  |
-	"||" { $$ = BinaryOperator($1); }  |
-	"<"  { $$ = BinaryOperator($1); }  |
-	">"  { $$ = BinaryOperator($1); }  |
-	"==" { $$ = BinaryOperator($1); }  |
-	"+"  { $$ = BinaryOperator($1); }  |
-	"-"  { $$ = BinaryOperator($1); }  |
-	"*"  { $$ = BinaryOperator($1); }  |
-	"/"  { $$ = BinaryOperator($1); }  |
-	"%"  { $$ = BinaryOperator($1); };
+	"&&" { $$ = new BinaryOperator("&&"); }  |
+	"||" { $$ = new BinaryOperator("||"); }  |
+	"<"  { $$ = new BinaryOperator("<"); }  |
+	">"  { $$ = new BinaryOperator(">"); }  |
+	"==" { $$ = new BinaryOperator("=="); }  |
+	"+"  { $$ = new BinaryOperator("+"); }  |
+	"-"  { $$ = new BinaryOperator("-"); }  |
+	"*"  { $$ = new BinaryOperator("*"); }  |
+	"/"  { $$ = new BinaryOperator("/"); }  |
+	"%"  { $$ = new BinaryOperator("%"); };
 %%
 
 void

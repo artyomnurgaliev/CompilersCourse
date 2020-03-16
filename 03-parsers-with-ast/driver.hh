@@ -6,7 +6,7 @@
 #include "scanner.h"
 #include "parser.hh"
 
-#include "classes/Program.h"
+#include "nterms_classes/Program.h"
 
 class Driver {
  public:
