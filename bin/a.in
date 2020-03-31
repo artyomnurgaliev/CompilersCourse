@@ -1,13 +1,17 @@
-class Test {
+class Factorial {
   public static void main () {
-    int a;
-    int b;
-    b = 5;
-    a = 1 + b + (b * b);
-    System.out.println(a);
-    a = a * 2;
-    a = a * a;
-    System.out.println(a);
-    return 0;
+    System.out.println (new Fac ().ComputeFac (10));
+  }
+}
+
+class Fac {
+  public int ComputeFac (int num) {
+    assert (num > 1);
+    int num_aux;
+    if (num == 0)
+      num_aux = 1;
+    else
+      num_aux = num * this.ComputeFac (num - 1);
+    return num_aux;
   }
 }
