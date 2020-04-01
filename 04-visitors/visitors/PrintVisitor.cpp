@@ -4,28 +4,28 @@
 
 #include <iostream>
 
-SymbolTreeVisitor::SymbolTreeVisitor(const std::string& filename) : stream_(filename) {
+PrintVisitor::PrintVisitor(const std::string& filename) : stream_(filename) {
 }
 
-void SymbolTreeVisitor::Visit(SimpleType* simple_type){
+void PrintVisitor::Visit(SimpleType* simple_type){
   PrintTabs();
   stream_ << "Simple Type:" << simple_type->GetSimpleTypeIdentifier() << std::endl;
 }
-void SymbolTreeVisitor::Visit(ArrayType* array_type) {
+void PrintVisitor::Visit(ArrayType* array_type) {
   PrintTabs();
   stream_ << "Array Type:" << std::endl;
   ++num_tabs_;
   array_type->GetSimpleType()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(AssertStatement* assert_statement){
+void PrintVisitor::Visit(AssertStatement* assert_statement){
   PrintTabs();
   stream_ << "Assert statement:" << std::endl;
   ++num_tabs_;
   assert_statement->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(AssignmentStatement* assignment_statement) {
+void PrintVisitor::Visit(AssignmentStatement* assignment_statement) {
   PrintTabs();
   stream_ << "Assignment statement:" << std::endl;
   ++num_tabs_;
@@ -33,7 +33,7 @@ void SymbolTreeVisitor::Visit(AssignmentStatement* assignment_statement) {
   assignment_statement->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(IfStatement* if_statement) {
+void PrintVisitor::Visit(IfStatement* if_statement) {
   PrintTabs();
   stream_ << "If statement:" << std::endl;
   ++num_tabs_;
@@ -45,7 +45,7 @@ void SymbolTreeVisitor::Visit(IfStatement* if_statement) {
   if_statement->GetStatement()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(IfElseStatement* if_else_statement){
+void PrintVisitor::Visit(IfElseStatement* if_else_statement){
   PrintTabs();
   stream_ << "If else statement:" << std::endl;
   ++num_tabs_;
@@ -60,35 +60,35 @@ void SymbolTreeVisitor::Visit(IfElseStatement* if_else_statement){
   if_else_statement->GetElseStatement()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(LocalVariableDeclaration* local_variable_declaration){
+void PrintVisitor::Visit(LocalVariableDeclaration* local_variable_declaration){
   PrintTabs();
   stream_ << "Local Variable Declaration:" << std::endl;
   ++num_tabs_;
   local_variable_declaration->GetVariableDeclaration()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(MethodInvocationStatement* method_invocation_statement) {
+void PrintVisitor::Visit(MethodInvocationStatement* method_invocation_statement) {
   PrintTabs();
   stream_ << "Method Invocation Statement:" << std::endl;
   ++num_tabs_;
   method_invocation_statement->GetMethodInvocation()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ReturnStatement* return_statement) {
+void PrintVisitor::Visit(ReturnStatement* return_statement) {
   PrintTabs();
   stream_ << "Return Statement:" << std::endl;
   ++num_tabs_;
   return_statement->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ScopeStatement* scope_statement) {
+void PrintVisitor::Visit(ScopeStatement* scope_statement) {
   PrintTabs();
   stream_ << "Scope Statement:" << std::endl;
   ++num_tabs_;
   scope_statement->GetStatementList()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(SoutStatement* sout_statement){
+void PrintVisitor::Visit(SoutStatement* sout_statement){
   PrintTabs();
   stream_ << "Sout statement:" << std::endl;
   ++num_tabs_;
@@ -96,7 +96,7 @@ void SymbolTreeVisitor::Visit(SoutStatement* sout_statement){
   --num_tabs_;
 }
 
-void SymbolTreeVisitor::Visit(StatementList* statement_list){
+void PrintVisitor::Visit(StatementList* statement_list){
   PrintTabs();
   stream_ << "Statement List:" << std::endl;
   ++num_tabs_;
@@ -105,7 +105,7 @@ void SymbolTreeVisitor::Visit(StatementList* statement_list){
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(WhileStatement* while_statement) {
+void PrintVisitor::Visit(WhileStatement* while_statement) {
   PrintTabs();
   stream_ << "While Statement:" << std::endl;
   ++num_tabs_;
@@ -118,7 +118,7 @@ void SymbolTreeVisitor::Visit(WhileStatement* while_statement) {
   --num_tabs_;
 }
 
-void SymbolTreeVisitor::Visit(SimpleLvalue* simple_lvalue) {
+void PrintVisitor::Visit(SimpleLvalue* simple_lvalue) {
   PrintTabs();
   stream_ << "Simple lvalue:" << std::endl;
   ++num_tabs_;
@@ -126,7 +126,7 @@ void SymbolTreeVisitor::Visit(SimpleLvalue* simple_lvalue) {
   stream_ << "identifier: " << simple_lvalue->GetIdentifier() << std::endl;
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ArrayElementLvalue* array_element_lvalue) {
+void PrintVisitor::Visit(ArrayElementLvalue* array_element_lvalue) {
   PrintTabs();
   stream_ << "Array element lvalue:" << std::endl;
   ++num_tabs_;
@@ -135,7 +135,7 @@ void SymbolTreeVisitor::Visit(ArrayElementLvalue* array_element_lvalue) {
   array_element_lvalue->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(AccessToArrayElementExpression* access_to_array_element_expression){
+void PrintVisitor::Visit(AccessToArrayElementExpression* access_to_array_element_expression){
   PrintTabs();
   stream_ << "Access to array element expression:" << std::endl;
   ++num_tabs_;
@@ -143,7 +143,7 @@ void SymbolTreeVisitor::Visit(AccessToArrayElementExpression* access_to_array_el
   access_to_array_element_expression->GetSecond()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ArrayDefenitionExpression* array_defenition_expression) {
+void PrintVisitor::Visit(ArrayDefenitionExpression* array_defenition_expression) {
   PrintTabs();
   stream_ << "Array Definition Expression: " << std::endl;
   ++num_tabs_;
@@ -151,7 +151,7 @@ void SymbolTreeVisitor::Visit(ArrayDefenitionExpression* array_defenition_expres
   array_defenition_expression->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ArrayLengthExpression* array_length_expression){
+void PrintVisitor::Visit(ArrayLengthExpression* array_length_expression){
   PrintTabs();
   stream_ << "Array Length Expression:" << std::endl;
   ++num_tabs_;
@@ -159,7 +159,7 @@ void SymbolTreeVisitor::Visit(ArrayLengthExpression* array_length_expression){
   --num_tabs_;
 }
 
-void SymbolTreeVisitor::Visit(BinaryOperatorExpression* binary_operator_expression){
+void PrintVisitor::Visit(BinaryOperatorExpression* binary_operator_expression){
   PrintTabs();
   stream_ << "Binary Operator Expression: " << std::endl;
   ++num_tabs_;
@@ -169,7 +169,7 @@ void SymbolTreeVisitor::Visit(BinaryOperatorExpression* binary_operator_expressi
   --num_tabs_;
 }
 
-void SymbolTreeVisitor::Visit(DefenitionExpression* defenition_expression) {
+void PrintVisitor::Visit(DefenitionExpression* defenition_expression) {
   PrintTabs();
   stream_ << "Defenition Expression: " << std::endl;
   ++num_tabs_;
@@ -177,7 +177,7 @@ void SymbolTreeVisitor::Visit(DefenitionExpression* defenition_expression) {
   --num_tabs_;
 }
 
-void SymbolTreeVisitor::Visit(ExpressionList* expression_list){
+void PrintVisitor::Visit(ExpressionList* expression_list){
   PrintTabs();
   stream_ << "Expression List: " << std::endl;
   ++num_tabs_;
@@ -186,7 +186,7 @@ void SymbolTreeVisitor::Visit(ExpressionList* expression_list){
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(IdentExpression* ident_expression) {
+void PrintVisitor::Visit(IdentExpression* ident_expression) {
   PrintTabs();
   stream_ << "Ident Expression:" << std::endl;
   ++num_tabs_;
@@ -194,40 +194,40 @@ void SymbolTreeVisitor::Visit(IdentExpression* ident_expression) {
   stream_ << "identifier: " << ident_expression->GetIdentifier() << std::endl;
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(MethodInvocationExpression* method_invocation_expression){
+void PrintVisitor::Visit(MethodInvocationExpression* method_invocation_expression){
   PrintTabs();
   stream_ << "Method Invocation Expression: " << std::endl;
   ++num_tabs_;
   method_invocation_expression->GetMethodInvocation()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(NotExpression* not_expression) {
+void PrintVisitor::Visit(NotExpression* not_expression) {
   PrintTabs();
   stream_ << "Not Expression:" << std::endl;
   ++num_tabs_;
   not_expression->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(NumberExpression* number_expression) {
+void PrintVisitor::Visit(NumberExpression* number_expression) {
   PrintTabs();
   stream_ << "Number Expression: " << number_expression->GetValue() << std::endl;
 }
-void SymbolTreeVisitor::Visit(ParenthesisExpression* parenthesis_expression) {
+void PrintVisitor::Visit(ParenthesisExpression* parenthesis_expression) {
   PrintTabs();
   stream_ << "Parenthesis Expression: " << std::endl;
   ++num_tabs_;
   parenthesis_expression->GetExpression()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ThisExpression* this_expression) {
+void PrintVisitor::Visit(ThisExpression* this_expression) {
   PrintTabs();
   stream_ << "This Expression" << std::endl;
 }
-void SymbolTreeVisitor::Visit(BoolExpression* bool_expression) {
+void PrintVisitor::Visit(BoolExpression* bool_expression) {
   PrintTabs();
   stream_ << "Bool Expression: " << bool_expression->GetValue() << std::endl;
 }
-void SymbolTreeVisitor::Visit(Declaration* declaration) {
+void PrintVisitor::Visit(Declaration* declaration) {
   PrintTabs();
   stream_ << "Declaration: " << std::endl;
   ++num_tabs_;
@@ -238,7 +238,7 @@ void SymbolTreeVisitor::Visit(Declaration* declaration) {
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(DeclarationList* declaration_list) {
+void PrintVisitor::Visit(DeclarationList* declaration_list) {
   PrintTabs();
   stream_ << "Declaration List: " << std::endl;
   ++num_tabs_;
@@ -247,7 +247,7 @@ void SymbolTreeVisitor::Visit(DeclarationList* declaration_list) {
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(MethodDeclaration* method_declaration) {
+void PrintVisitor::Visit(MethodDeclaration* method_declaration) {
   PrintTabs();
   stream_ << "Method Declaration: " << std::endl;
   ++num_tabs_;
@@ -258,7 +258,7 @@ void SymbolTreeVisitor::Visit(MethodDeclaration* method_declaration) {
   method_declaration->GetStatements()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(VariableDeclaration* variable_declaration) {
+void PrintVisitor::Visit(VariableDeclaration* variable_declaration) {
   PrintTabs();
   stream_ << "Variable Declaration :" << std::endl;
   ++num_tabs_;
@@ -267,7 +267,7 @@ void SymbolTreeVisitor::Visit(VariableDeclaration* variable_declaration) {
   stream_ << "identifier: " << variable_declaration->GetIdentifier() << std::endl;
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ClassDeclaration* class_declaration) {
+void PrintVisitor::Visit(ClassDeclaration* class_declaration) {
   PrintTabs();
   stream_ << "Class Declaration: " << std::endl;
   ++num_tabs_;
@@ -279,7 +279,7 @@ void SymbolTreeVisitor::Visit(ClassDeclaration* class_declaration) {
   class_declaration->GetDeclarationList()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(ClassDeclarationList* class_declaration_list) {
+void PrintVisitor::Visit(ClassDeclarationList* class_declaration_list) {
   PrintTabs();
   stream_ << "Class Declaration List: " << std::endl;
   ++num_tabs_;
@@ -288,7 +288,7 @@ void SymbolTreeVisitor::Visit(ClassDeclarationList* class_declaration_list) {
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(MainClass* main_class) {
+void PrintVisitor::Visit(MainClass* main_class) {
   PrintTabs();
   stream_ << "MainClass: " << std::endl;
   ++num_tabs_;
@@ -297,7 +297,7 @@ void SymbolTreeVisitor::Visit(MainClass* main_class) {
   main_class->GetStatementList()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(Type* type) {
+void PrintVisitor::Visit(Type* type) {
   PrintTabs();
   stream_ << "Type: " << std::endl;
   ++num_tabs_;
@@ -308,7 +308,7 @@ void SymbolTreeVisitor::Visit(Type* type) {
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(TypeIdentifier* type_identifier) {
+void PrintVisitor::Visit(TypeIdentifier* type_identifier) {
   PrintTabs();
   stream_ << "Type Identifier: " << std::endl;
   ++num_tabs_;
@@ -316,7 +316,7 @@ void SymbolTreeVisitor::Visit(TypeIdentifier* type_identifier) {
   stream_ << "identifier: " << type_identifier->GetIdentifier() << std::endl;
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(MethodInvocation* method_invocation) {
+void PrintVisitor::Visit(MethodInvocation* method_invocation) {
   PrintTabs();
   stream_ << "Method Invocation: " << std::endl;
   ++num_tabs_;
@@ -327,7 +327,7 @@ void SymbolTreeVisitor::Visit(MethodInvocation* method_invocation) {
   method_invocation->GetExpressionList()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(FormalList* formal_list) {
+void PrintVisitor::Visit(FormalList* formal_list) {
   PrintTabs();
   stream_ << "FormalList: " << std::endl;
   ++num_tabs_;
@@ -336,7 +336,7 @@ void SymbolTreeVisitor::Visit(FormalList* formal_list) {
   }
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(Formal* formal) {
+void PrintVisitor::Visit(Formal* formal) {
   PrintTabs();
   stream_ << "Formal: " << std::endl;
   ++num_tabs_;
@@ -345,11 +345,11 @@ void SymbolTreeVisitor::Visit(Formal* formal) {
   stream_ << "identifier: " << formal->GetIdentifier() << std::endl;
   --num_tabs_;
 }
-void SymbolTreeVisitor::Visit(BinaryOperator* binary_operator) {
+void PrintVisitor::Visit(BinaryOperator* binary_operator) {
   PrintTabs();
   stream_ << "BinaryOperator: " << binary_operator->GetOperatorName() << std::endl;
 }
-void SymbolTreeVisitor::Visit(Program* program) {
+void PrintVisitor::Visit(Program* program) {
   PrintTabs();
   stream_ << "Program:" << std::endl;
   ++num_tabs_;
@@ -357,23 +357,24 @@ void SymbolTreeVisitor::Visit(Program* program) {
   program->GetClassDeclarationList()->Accept(this);
   --num_tabs_;
 }
-void SymbolTreeVisitor::PrintTabs() {
-    for (int i = 0; i < num_tabs_; ++i) {
-        stream_ << '\t';
-    }
-}
 
-SymbolTreeVisitor::~SymbolTreeVisitor() {
+
+PrintVisitor::~PrintVisitor() {
     stream_.close();
 }
-void SymbolTreeVisitor::Visit(Expression *expression) {}
-void SymbolTreeVisitor::Visit(Lvalue *lvalue) {}
-void SymbolTreeVisitor::Visit(Statement *statement) {}
-void SymbolTreeVisitor::Visit(
+void PrintVisitor::Visit(Expression *expression) {}
+void PrintVisitor::Visit(Lvalue *lvalue) {}
+void PrintVisitor::Visit(Statement *statement) {}
+void PrintVisitor::Visit(
     LocalVariableDeclarationStatement *local_variable_declaration_statement) {
   PrintTabs();
   stream_ << "Local Variable Declaration Statement:" << std::endl;
   ++num_tabs_;
   local_variable_declaration_statement->GetLocalVariableDeclaration()->Accept(this);
   --num_tabs_;
+}
+void PrintVisitor::PrintTabs() {
+  for (int i = 0; i < num_tabs_; ++i) {
+    stream_ << '\t';
+  }
 }

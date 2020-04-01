@@ -1,14 +1,14 @@
-#pragma once
+#include "TemplateVisitor.h"
 
-#include "Visitor.h"
+#include <map>
 
-#include <fstream>
-#include <string>
+#include "symbol_table/ScopeLayerTree.h"
 
-class PrintVisitor : public Visitor {
+
+class SymbolTreeVisitor: public Visitor {
  public:
-    explicit PrintVisitor(const std::string& filename);
-    ~PrintVisitor();
+    SymbolTreeVisitor();
+    ~SymbolTreeVisitor() = default;
     void Visit(SimpleType* simple_type)override;
     void Visit(ArrayType* array_type) override;
     void Visit(AssertStatement* assert_statement)override;
@@ -55,10 +55,13 @@ class PrintVisitor : public Visitor {
     void Visit(Formal* formal)override;
     void Visit(BinaryOperator* binary_operator)override;
     void Visit(Program* program) override;
- private:
+    ScopeLayerTree GetRoot();
 
-    void PrintTabs();
-    std::ofstream stream_;
-    int num_tabs_ = 0;
+    //// TODO std::unordered_map<Symbol, Function*> GetFunctions() const;
+private:
 
+
+    ScopeLayerTree tree_;
+    ScopeLayer* current_layer_;
+    ///// TODO std::unordered_map<Symbol, Function*> functions_;
 };

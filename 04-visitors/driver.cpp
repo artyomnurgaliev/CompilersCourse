@@ -1,5 +1,6 @@
 #include "driver.hh"
 #include "parser.hh"
+#include <visitors/SymbolTreeVisitor.h>
 
 #include "visitors/Interpreter.h"
 #include "visitors/PrintVisitor.h"
@@ -46,6 +47,9 @@ void Driver::scan_end()
 }
 
 void Driver::PrintTree(const std::string& filename) {
-  SymbolTreeVisitor visitor(filename);
+  // PrintVisitor visitor(filename);
+  SymbolTreeVisitor visitor;
   visitor.Visit(program);
+  ScopeLayerTree tree = visitor.GetRoot();
+  tree.PrintTree(filename);
 }

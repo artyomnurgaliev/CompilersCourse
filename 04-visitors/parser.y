@@ -74,6 +74,9 @@
     PERCENT "%"
     LPAREN "("
     RPAREN ")"
+    LSQUAREBRACKET "["
+    RSQUAREBRACKET "]"
+    COMMA ","
 ;
 
 %token <std::string> IDENTIFIER "identifier"

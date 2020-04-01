@@ -14,4 +14,17 @@ class Fac {
       num_aux = num * this.ComputeFac (num - 1);
     return num_aux;
   }
+  public int HEH(double b, double c) {
+    if (b == 1) {
+        int x;
+        x = 0;
+        return x;
+    }
+    while (c > 0) {
+      int b;
+      int l;
+      l = b + b;
+    }
+    return c;
+  }
 }
