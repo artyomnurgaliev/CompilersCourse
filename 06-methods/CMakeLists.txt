@@ -1,0 +1,61 @@
+project(MethodCalls)
+set(CURRENT_EXECUTABLE "${PROJECT_NAME}Executable")
+set(GRAMMAR_LIB "${PROJECT_NAME}GrammarLib")
+set(GRAMMAR_PROJECT "${PROJECT_NAME}GrammarProject")
+
+set(
+    SOURCES
+    driver.cpp
+    visitors/Interpreter.cpp
+    visitors/TemplateVisitor.cpp
+    visitors/PrintVisitor.cpp
+    symbol_table/Symbol.cpp
+    symbol_table/Table.cpp
+    symbol_table/ScopeLayer.cpp
+    symbol_table/ScopeLayerTree.cpp
+    objects/ClassType.h
+    objects/ClassType.cpp
+    objects/MainClassType.h
+    objects/MainClassType.cpp
+    objects/MethodType.h
+    objects/MethodType.cpp
+    objects/MainClassType.h
+    objects/MainClassType.cpp
+    objects/ObjectType.h
+    objects/ObjectType.cpp
+    objects/PrimitiveObjectType.h
+    objects/PrimitiveObjectType.cpp
+    objects/UninitObjectType.h
+    objects/UninitObjectType.cpp
+    visitors/SymbolTreeVisitor.cpp
+    visitors/FunctionCallVisitor.cpp
+    visitors/FunctionCallVisitor.h
+    method-mechanisms/Frame.cpp
+    method-mechanisms/Frame.h
+    method-mechanisms/FunctionTable.cpp
+    method-mechanisms/FunctionTable.h
+    method-mechanisms/FunctionStorage.cpp
+    method-mechanisms/FunctionStorage.h
+)
+
+add_subdirectory(grammar)
+
+add_executable(
+    ${CURRENT_EXECUTABLE}
+    main.cpp
+    ${SOURCES}
+)
+
+
+target_include_directories(
+    ${CURRENT_EXECUTABLE} PRIVATE ${PROJECT_SOURCE_DIR}
+)
+target_include_directories(
+    ${CURRENT_EXECUTABLE} PRIVATE ${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/grammar
+)
+
+
+target_link_libraries(${CURRENT_EXECUTABLE} ${GRAMMAR_LIB})
+
+
+
