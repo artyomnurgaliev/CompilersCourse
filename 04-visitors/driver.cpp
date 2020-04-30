@@ -1,6 +1,5 @@
 #include "driver.hh"
 #include "parser.hh"
-#include <visitors/SymbolTreeVisitor.h>
 
 #include "visitors/Interpreter.h"
 #include "visitors/PrintVisitor.h"
@@ -15,23 +14,23 @@ Driver::Driver() :
 
 
 int Driver::parse(const std::string& f) {
-  file = f;
-  location.initialize(&file);
-  scan_begin();
-  parser.set_debug_level(trace_parsing);
-  int res = parser();
-  std::cout << "parser " << res << std::endl;
-  scan_end();
-  return res;
+    file = f;
+    location.initialize(&file);
+    scan_begin();
+    parser.set_debug_level(trace_parsing);
+    int res = parser();
+    std::cout << "parser " << res << std::endl;
+    scan_end();
+    return res;
 }
 
 int Driver::Evaluate() {
-  Interpreter interpreter;
-  return interpreter.GetResult(program);
+    Interpreter interpreter;
+    return interpreter.GetResult(program);
 }
 
 void Driver::scan_begin() {
-  scanner.set_debug(trace_scanning);
+    scanner.set_debug(trace_scanning);
   if (file.empty () || file == "-") {
   } else {
     stream.open(file);
@@ -42,14 +41,11 @@ void Driver::scan_begin() {
 
 void Driver::scan_end()
 {
-
-  stream.close();
+    stream.close();
 }
 
 void Driver::PrintTree(const std::string& filename) {
-  // PrintVisitor visitor(filename);
-  SymbolTreeVisitor visitor;
-  visitor.Visit(program);
-  ScopeLayerTree tree = visitor.GetRoot();
-  tree.PrintTree(filename);
+    SymbolTreeVisitor visitor(filename);
+    visitor.Visit(program);
 }
+
