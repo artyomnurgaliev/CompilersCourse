@@ -23,10 +23,10 @@ class Visitor {
     virtual void Visit(SimpleLvalue* simple_lvalue) = 0;
     virtual void Visit(ArrayElementLvalue* array_element_lvalue) = 0;
     virtual void Visit(AccessToArrayElementExpression* access_to_array_element_expression) = 0;
-    virtual void Visit(ArrayDefenitionExpression* array_defenition_expression) = 0;
+    virtual void Visit(ArrayNewExpression* array_defenition_expression) = 0;
     virtual void Visit(ArrayLengthExpression* array_length_expression) = 0;
     virtual void Visit(BinaryOperatorExpression* binary_operator_expression) = 0;
-    virtual void Visit(DefenitionExpression* defenition_expression) = 0;
+    virtual void Visit(NewExpression* defenition_expression) = 0;
     virtual void Visit(Expression* expression) = 0;
     virtual void Visit(ExpressionList* expression_list) = 0;
     virtual void Visit(IdentExpression* ident_expression) = 0;

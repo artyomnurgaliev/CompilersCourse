@@ -6,8 +6,7 @@
 #include "grammar/scanner.h"
 #include "parser.hh"
 
-#include "grammar/Program.h"
-
+#include "grammar/nterms_classes/Program.h"
 
 
 class Driver {

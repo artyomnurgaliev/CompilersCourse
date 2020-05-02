@@ -1,6 +1,9 @@
+#pragma once
 #include "TemplateVisitor.h"
 
 #include <map>
+#include <objects/ClassType.h>
+#include <unordered_set>
 
 #include "symbol_table/ScopeLayerTree.h"
 
@@ -28,10 +31,10 @@ class SymbolTreeVisitor: public Visitor {
     void Visit(SimpleLvalue* simple_lvalue) override;
     void Visit(ArrayElementLvalue* array_element_lvalue) override;
     void Visit(AccessToArrayElementExpression* access_to_array_element_expression) override;
-    void Visit(ArrayDefenitionExpression* array_defenition_expression) override;
+    void Visit(ArrayNewExpression* array_new_expression) override;
     void Visit(ArrayLengthExpression* array_length_expression) override;
     void Visit(BinaryOperatorExpression* binary_operator_expression)override;
-    void Visit(DefenitionExpression* defenition_expression) override;
+    void Visit(NewExpression* new_expression) override;
     void Visit(Expression* expression) override;
     void Visit(ExpressionList* expression_list)override;
     void Visit(IdentExpression* ident_expression) override;
@@ -57,11 +60,13 @@ class SymbolTreeVisitor: public Visitor {
     void Visit(Program* program) override;
     ScopeLayerTree GetRoot();
 
-    //// TODO std::unordered_map<Symbol, Function*> GetFunctions() const;
+    std::unordered_map<Symbol, std::shared_ptr<ClassType>> GetClasses() const;
+    std::unordered_set<std::string> GetDeclaredTypes();
 private:
-
-
+    std::unordered_set<std::string> declared_types_;
+    std::unordered_map<Symbol, std::shared_ptr<ClassType>> classes_;
+    std::shared_ptr<MainClassType> main_class_;
+    Symbol current_class_;
     ScopeLayerTree tree_;
     ScopeLayer* current_layer_;
-    ///// TODO std::unordered_map<Symbol, Function*> functions_;
 };

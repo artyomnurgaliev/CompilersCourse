@@ -27,10 +27,10 @@ void Interpreter::Visit(WhileStatement* while_statement) {}
 void Interpreter::Visit(SimpleLvalue* simple_lvalue) {}
 void Interpreter::Visit(ArrayElementLvalue* array_element_lvalue) {}
 void Interpreter::Visit(AccessToArrayElementExpression* access_to_array_element_expression){}
-void Interpreter::Visit(ArrayDefenitionExpression* array_defenition_expression) {}
+void Interpreter::Visit(ArrayNewExpression* array_defenition_expression) {}
 void Interpreter::Visit(ArrayLengthExpression* array_length_expression){}
 void Interpreter::Visit(BinaryOperatorExpression* binary_operator_expression){}
-void Interpreter::Visit(DefenitionExpression* defenition_expression) {}
+void Interpreter::Visit(NewExpression* defenition_expression) {}
 void Interpreter::Visit(ExpressionList* expression_list){}
 void Interpreter::Visit(IdentExpression* ident_expression) {}
 void Interpreter::Visit(MethodInvocationExpression* method_invocation_expression){}
@@ -56,9 +56,7 @@ void Interpreter::Visit(Program* program) {}
 void Interpreter::Visit(Expression *expression) {}
 void Interpreter::Visit(Lvalue *lvalue) {}
 void Interpreter::Visit(Statement *statement) {}
-void Interpreter::Visit(
-    LocalVariableDeclarationStatement *local_variable_declaration_statement) {
-
+void Interpreter::Visit(LocalVariableDeclarationStatement *local_variable_declaration_statement) {
 }
 /*
 

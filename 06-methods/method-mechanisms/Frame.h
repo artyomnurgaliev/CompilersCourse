@@ -4,14 +4,13 @@
 
 #pragma once
 
-#include <types/FunctionType.h>
+#include <objects/MethodType.h>
 #include <stack>
-#include <grammar/functions/Function.h>
 
 #include <memory>
 class Frame {
  public:
-  explicit Frame(std::shared_ptr<FunctionType> function);
+  explicit Frame(std::shared_ptr<MethodType> method);
   void SetParams(const std::vector<int>& values);
 
   size_t AllocVariable();

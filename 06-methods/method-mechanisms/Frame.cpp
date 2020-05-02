@@ -1,12 +1,10 @@
-//
-// Created by Pavel Akhtyamov on 25.03.2020.
-//
+
 
 #include "Frame.h"
 Frame::Frame(std::shared_ptr<FunctionType> function) {
   params_.resize(function->arguments_.size());
 
-  AllocScope();
+  AllocScope();do
 }
 
 void Frame::SetParams(const std::vector<int> &values) {

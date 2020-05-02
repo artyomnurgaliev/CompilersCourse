@@ -10,10 +10,10 @@
 #include "grammar/nterms_classes/declarations/DeclarationList.h"
 
 #include "grammar/nterms_classes/expressions/AccessToArrayElementExpression.h"
-#include "grammar/nterms_classes/expressions/ArrayDefenitionExpression.h"
+#include "grammar/nterms_classes/expressions/ArrayNewExpression.h"
 #include "grammar/nterms_classes/expressions/ArrayLengthExpression.h"
 #include "grammar/nterms_classes/expressions/BinaryOperatorExpression.h"
-#include "grammar/nterms_classes/expressions/DefenitionExpression.h"
+#include "grammar/nterms_classes/expressions/NewExpression.h"
 #include "grammar/nterms_classes/expressions/Expression.h"
 #include "grammar/nterms_classes/expressions/ExpressionList.h"
 #include "grammar/nterms_classes/expressions/IdentExpression.h"

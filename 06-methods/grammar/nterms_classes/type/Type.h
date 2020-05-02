@@ -1,6 +1,8 @@
 #pragma once
-
+#include <string>
 #include <base_elements/BaseElement.h>
+#include <nterms_classes/type/SimpleType.h>
+#include <nterms_classes/type/ArrayType.h>
 class Type : public BaseElement{
 public:
   explicit Type(SimpleType* simple_type);
@@ -12,6 +14,7 @@ public:
   void SetArrayType(ArrayType *array_type);
   bool IsSimpleType() const;
   void SetIsSimpleType(bool is_simple_type);
+  std::string GetType();
 
 private:
   SimpleType* simple_type_ = nullptr;

@@ -1,10 +1,7 @@
 #include "ScopeLayer.h"
 
 #include <iostream>
-#include <symbol_table/objects/ClassType.h>
-#include <symbol_table/objects/MainClassType.h>
-#include <symbol_table/objects/MethodType.h>
-#include <symbol_table/objects/PrimitiveObjectType.h>
+
 
 ScopeLayer::ScopeLayer(ScopeLayer* parent): parent_(parent) {
     std::cout << "Constructor called" << std::endl;
@@ -18,46 +15,53 @@ void ScopeLayer::AttachParent() {
 
 ScopeLayer::ScopeLayer(): parent_(nullptr) {}
 
-void ScopeLayer::DeclareVariable(Symbol symbol, Type* type) {
+std::shared_ptr<PrimitiveObjectType> ScopeLayer::DeclareVariable(Symbol symbol, Type* type) {
   if (values_.find(symbol) != values_.end()) {
     throw std::runtime_error("Variable has declared");
   }
 
-  values_[symbol] = std::make_shared<PrimitiveObjectType>(type);
-
+  auto variable = std::make_shared<PrimitiveObjectType>(type);
+  values_[symbol] = variable;
   offsets_[symbol] = symbols_.size();
   symbols_.push_back(symbol);
+  return variable;
 }
 
-void ScopeLayer::DeclareMethod(Symbol symbol,
+std::shared_ptr<MethodType> ScopeLayer::DeclareMethod(Symbol symbol,
                                MethodDeclaration *method_declaration) {
   if (values_.find(symbol) != values_.end()) {
     throw std::runtime_error("Method has declared");
   }
-  values_[symbol] = std::make_shared<MethodType>(method_declaration->GetType(), method_declaration->GetFormals());
+  auto method = std::make_shared<MethodType>(method_declaration->GetType(), method_declaration->GetFormals());
+  values_[symbol] = method;
   offsets_[symbol] = symbols_.size();
   symbols_.push_back(symbol);
+  return method;
 }
 
-void ScopeLayer::DeclareMainClass(Symbol symbol,
+std::shared_ptr<MainClassType> ScopeLayer::DeclareMainClass(Symbol symbol,
                                   StatementList *statement_list) {
   if (values_.find(symbol) != values_.end()) {
     throw std::runtime_error("Main Class has declared");
   }
-  values_[symbol] = std::make_shared<MainClassType>(statement_list);
+  auto main_class = std::make_shared<MainClassType>(statement_list);
+  values_[symbol] = main_class;
   offsets_[symbol] = symbols_.size();
   symbols_.push_back(symbol);
+  return main_class;
 }
 
 
-void ScopeLayer::DeclareClass(Symbol symbol,
+std::shared_ptr<ClassType> ScopeLayer::DeclareClass(Symbol symbol,
                               ClassDeclaration *class_declaration) {
   if (values_.find(symbol) != values_.end()) {
     throw std::runtime_error("Class has declared");
   }
-  values_[symbol] = std::make_shared<ClassType>(class_declaration->GetExtendsIdentifier(),class_declaration->GetDeclarationList());
+  auto class_decl = std::make_shared<ClassType>(class_declaration->GetExtendsIdentifier());
+  values_[symbol] = class_decl;
   symbols_.push_back(symbol);
   offsets_[symbol] = symbols_.size();
+  return class_decl;
 }
 
 
@@ -89,7 +93,7 @@ std::shared_ptr<ObjectType> ScopeLayer::Get(Symbol symbol) {
     if (current_layer->Has(symbol)) {
         return current_layer->values_.find(symbol)->second;
     } else {
-        throw std::runtime_error("Variable not declared");
+        throw std::runtime_error("Not declared");
     }
 }
 

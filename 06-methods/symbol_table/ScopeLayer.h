@@ -1,23 +1,27 @@
 #pragma once
 
 #include "Symbol.h"
-#include "symbol_table/objects/ObjectType.h"
+#include "objects/ObjectType.h"
 
 #include <memory>
 #include <nterms_classes/declarations/MethodDeclaration.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <objects/ClassType.h>
+#include <objects/MainClassType.h>
+#include <objects/MethodType.h>
+#include <objects/PrimitiveObjectType.h>
 
 class ScopeLayer {
  public:
     explicit ScopeLayer(ScopeLayer* parent);
     ScopeLayer();
     ~ScopeLayer();
-    void DeclareMainClass(Symbol symbol, StatementList* statement_list);
-    void DeclareVariable(Symbol symbol, Type* type);
-    void DeclareMethod(Symbol symbol, MethodDeclaration* method_declaration);
-    void DeclareClass(Symbol symbol, ClassDeclaration* class_declaration);
+    std::shared_ptr<MainClassType> DeclareMainClass(Symbol symbol, StatementList* statement_list);
+    std::shared_ptr<PrimitiveObjectType> DeclareVariable(Symbol symbol, Type* type);
+    std::shared_ptr<MethodType> DeclareMethod(Symbol symbol, MethodDeclaration* method_declaration);
+    std::shared_ptr<ClassType> DeclareClass(Symbol symbol, ClassDeclaration* class_declaration);
     void Put(Symbol symbol, std::shared_ptr<ObjectType> value);
     std::shared_ptr<ObjectType> Get(Symbol symbol);
     bool Has(Symbol symbol);

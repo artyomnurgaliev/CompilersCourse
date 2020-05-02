@@ -3,7 +3,7 @@
 #include <base_elements/BaseElement.h>
 #include <string>
 #include <vector>
-class FormalList:public BaseElement {
+class FormalList: public BaseElement {
 public:
   void AddFormal(Formal* formal);
   void Accept(Visitor* visitor) override;

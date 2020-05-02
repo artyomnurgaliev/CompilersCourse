@@ -1,5 +1,13 @@
 #include "ClassType.h"
 
-#include <utility>
-ClassType::ClassType(std::string extends_identifier,
-                     DeclarationList *declaration_list) : extends_identifier_(std::move(extends_identifier)), declaration_list_(declaration_list){}
+std::unordered_map<Symbol, std::shared_ptr<MethodType>> ClassType::GetMethods() {
+  return methods_;
+}
+ClassType::ClassType(const std::string& extends_identifier) : extends_class_(Symbol(extends_identifier)) {
+}
+void ClassType::AddMethod(const Symbol& symbol, std::shared_ptr<MethodType> method) {
+  methods_[symbol] = method;
+}
+std::string ClassType::GetTypeName() {
+  return "Class";
+}

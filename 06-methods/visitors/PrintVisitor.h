@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Visitor.h"
+#include "include/visitors/Visitor.h"
 
 #include <fstream>
 #include <string>
 
-<<<<<<< HEAD
 class PrintVisitor : public Visitor {
  public:
     explicit PrintVisitor(const std::string& filename);
@@ -29,10 +28,10 @@ class PrintVisitor : public Visitor {
     void Visit(SimpleLvalue* simple_lvalue) override;
     void Visit(ArrayElementLvalue* array_element_lvalue) override;
     void Visit(AccessToArrayElementExpression* access_to_array_element_expression) override;
-    void Visit(ArrayDefenitionExpression* array_defenition_expression) override;
+    void Visit(ArrayNewExpression* array_defenition_expression) override;
     void Visit(ArrayLengthExpression* array_length_expression) override;
     void Visit(BinaryOperatorExpression* binary_operator_expression)override;
-    void Visit(DefenitionExpression* defenition_expression) override;
+    void Visit(NewExpression* defenition_expression) override;
     void Visit(Expression* expression) override;
     void Visit(ExpressionList* expression_list)override;
     void Visit(IdentExpression* ident_expression) override;
@@ -55,23 +54,8 @@ class PrintVisitor : public Visitor {
     void Visit(FormalList* formal_list)override;
     void Visit(Formal* formal)override;
     void Visit(BinaryOperator* binary_operator)override;
-=======
-class SymbolTreeVisitor: public Visitor {
- public:
-    SymbolTreeVisitor(const std::string& filename);
-    ~SymbolTreeVisitor();
-    void Visit(NumberExpression* expression) override;
-    void Visit(AddExpression* expression) override;
-    void Visit(SubstractExpression* expression) override;
-    void Visit(MulExpression* expression) override;
-    void Visit(DivExpression* expression) override;
-    void Visit(IdentExpression* expression) override;
-    void Visit(Assignment* assignment) override;
-    void Visit(AssignmentList* assignment_list) override;
->>>>>>> upstream/master
     void Visit(Program* program) override;
  private:
-
     void PrintTabs();
     std::ofstream stream_;
     int num_tabs_ = 0;

@@ -7,7 +7,7 @@
 class MainClassType : public ObjectType {
 public:
   MainClassType(StatementList* statement_list);
-
+  std::string GetTypeName() override;
 private:
   StatementList* statement_list_;
 };

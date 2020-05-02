@@ -3,9 +3,9 @@
 
 #include "Expression.h"
 #include <nterms_classes/TypeIdentifier.h>
-class DefenitionExpression : public Expression{
+class NewExpression : public Expression{
 public:
-  explicit DefenitionExpression(TypeIdentifier* type_identifier);
+  explicit NewExpression(TypeIdentifier* type_identifier);
   void Accept(Visitor* visitor) override;
   TypeIdentifier *GetTypeIdentifier() const;
   void SetTypeIdentifier(TypeIdentifier *type_identifier);

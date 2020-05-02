@@ -43,10 +43,10 @@ set(
         nterms_classes/expressions/AccessToArrayElementExpression.h
         nterms_classes/expressions/ArrayLengthExpression.cpp
         nterms_classes/expressions/ArrayLengthExpression.h
-        nterms_classes/expressions/ArrayDefenitionExpression.cpp
-        nterms_classes/expressions/ArrayDefenitionExpression.h
-        nterms_classes/expressions/DefenitionExpression.cpp
-        nterms_classes/expressions/DefenitionExpression.h
+        nterms_classes/expressions/ArrayNewExpression.cpp
+        nterms_classes/expressions/ArrayNewExpression.h
+        nterms_classes/expressions/NewExpression.cpp
+        nterms_classes/expressions/NewExpression.h
         nterms_classes/expressions/NotExpression.cpp
         nterms_classes/expressions/NotExpression.h
         nterms_classes/expressions/ParenthesisExpression.cpp

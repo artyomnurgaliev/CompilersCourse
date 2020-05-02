@@ -3,9 +3,9 @@
 
 #include "Expression.h"
 #include <nterms_classes/type/SimpleType.h>
-class ArrayDefenitionExpression : public Expression{
+class ArrayNewExpression : public Expression{
 public:
-  ArrayDefenitionExpression(SimpleType* simple_type, Expression* expression);
+  ArrayNewExpression(SimpleType* simple_type, Expression* expression);
   void Accept(Visitor* visitor) override;
   SimpleType *GetSimpleType() const;
   void SetSimpleType(SimpleType *simple_type);

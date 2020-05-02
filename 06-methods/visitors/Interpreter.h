@@ -1,8 +1,8 @@
-#include "Visitor.h"
+#include "include/visitors/Visitor.h"
 
 #include <map>
 
-class Interpreter : public Visitor {
+class  : public Visitor {
  public:
     Interpreter();
     void Visit(SimpleType* simple_type)override;
@@ -24,10 +24,10 @@ class Interpreter : public Visitor {
     void Visit(SimpleLvalue* simple_lvalue) override;
     void Visit(ArrayElementLvalue* array_element_lvalue) override;
     void Visit(AccessToArrayElementExpression* access_to_array_element_expression) override;
-    void Visit(ArrayDefenitionExpression* array_defenition_expression) override;
+    void Visit(ArrayNewExpression* array_defenition_expression) override;
     void Visit(ArrayLengthExpression* array_length_expression) override;
     void Visit(BinaryOperatorExpression* binary_operator_expression)override;
-    void Visit(DefenitionExpression* defenition_expression) override;
+    void Visit(NewExpression* defenition_expression) override;
     void Visit(Expression* expression) override;
     void Visit(ExpressionList* expression_list)override;
     void Visit(IdentExpression* ident_expression) override;

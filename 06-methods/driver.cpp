@@ -1,5 +1,5 @@
-#include <visitors/FunctionCallVisitor.h>
-#include <function-mechanisms/FunctionStorage.h>
+#include <visitors/MethodCallVisitor.h>
+#include <method-mechanisms/FunctionStorage.h>
 #include "driver.hh"
 #include "parser.hh"
 
@@ -36,7 +36,7 @@ int Driver::Evaluate() {
 
     ScopeLayerTree root = visitor.GetRoot();
 
-    auto functions = visitor.GetFunctions();
+    /*auto functions = visitor.GetFunctions();
 
     FunctionStorage& storage = FunctionStorage::GetInstance();
     for (auto it : functions) {
@@ -49,7 +49,7 @@ int Driver::Evaluate() {
         root.Get(Symbol("main"))
     );
 
-    FunctionCallVisitor function_visitor(
+    MethodCallVisitor function_visitor(
         root.GetFunctionScopeByName(Symbol("main")),
         function_type
       );
@@ -59,11 +59,12 @@ int Driver::Evaluate() {
     function_visitor.Visit(main_function);
 
     root.PrintTree("symbol_tree.txt");
-    Interpreter interpreter(root);
-    int interpreter_result = interpreter.GetResult(program);
+    // Interpreter interpreter(root);
+    // int interpreter_result = interpreter.GetResult(program);
 
 //    delete root;
-    return interpreter_result;
+    // return interpreter_result;*/
+    return 0;
 }
 
 void Driver::scan_begin() {

@@ -11,7 +11,8 @@ class Symbol {
     bool operator==(const Symbol& other) const;
     bool operator!=(const Symbol& other) const;
     std::string GetName() const;
-    Symbol(const std::string& name);
+    Symbol() = default;
+    explicit Symbol(const std::string& name);
     Symbol(const Symbol& other);
  private:
     std::string name_;

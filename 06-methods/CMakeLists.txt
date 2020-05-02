@@ -7,11 +7,9 @@ set(
     SOURCES
     driver.cpp
     visitors/Interpreter.cpp
-    visitors/TemplateVisitor.cpp
-    visitors/PrintVisitor.cpp
+        visitors/PrintVisitor.cpp
     symbol_table/Symbol.cpp
-    symbol_table/Table.cpp
-    symbol_table/ScopeLayer.cpp
+        symbol_table/ScopeLayer.cpp
     symbol_table/ScopeLayerTree.cpp
     objects/ClassType.h
     objects/ClassType.cpp
@@ -25,11 +23,9 @@ set(
     objects/ObjectType.cpp
     objects/PrimitiveObjectType.h
     objects/PrimitiveObjectType.cpp
-    objects/UninitObjectType.h
-    objects/UninitObjectType.cpp
-    visitors/SymbolTreeVisitor.cpp
-    visitors/FunctionCallVisitor.cpp
-    visitors/FunctionCallVisitor.h
+        visitors/SymbolTreeVisitor.cpp
+        visitors/MethodCallVisitor.cpp
+        visitors/MethodCallVisitor.h
     method-mechanisms/Frame.cpp
     method-mechanisms/Frame.h
     method-mechanisms/FunctionTable.cpp

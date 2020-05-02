@@ -8,9 +8,10 @@
 
 %code requires {
     #include <string>
-    #include "forward_decl.h"
     class Scanner;
     class Driver;
+
+    #include "visitors/forward_decl.h"
 }
 
 // %param { Driver &drv }
@@ -21,7 +22,12 @@
 %code {
     #include "driver.hh"
     #include "location.hh"
-    #include "elements.h"
+
+    #include "visitors/elements.h"
+    #include "nterms_classes/Program.h"
+
+    #include <iostream>
+
     static yy::parser::symbol_type yylex(Scanner &scanner, Driver& driver) {
         return scanner.ScanToken();
     }
@@ -196,8 +202,8 @@ expr:
 	}  |
         expr "[" expr "]" { $$ = new AccessToArrayElementExpression($1, $3); }  |
         expr "." "length"  { $$ = new ArrayLengthExpression($1); } |
-        "new" simple_type "[" expr "]" { $$ = new ArrayDefenitionExpression($2, $4); } |
-        "new" type_identifier "(" ")" { $$ = new DefenitionExpression($2); } |
+        "new" simple_type "[" expr "]" { $$ = new ArrayNewExpression($2, $4); } |
+        "new" type_identifier "(" ")" { $$ = new NewExpression($2); } |
         "!" expr { $$ = new NotExpression($2); } |
         "(" expr ")" { $$ = new ParenthesisExpression($2); } |
         "identifier" { $$ = new IdentExpression($1); } | "number" { $$ = new NumberExpression($1); } |
