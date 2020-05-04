@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
         } else {
 
             driver.parse(argv[i]);
-            driver.PrintTree("print_visitor_result");
+            //driver.PrintTree("print_visitor_result");
             std::cout << driver.Evaluate() << std::endl;
             ++i;
         }

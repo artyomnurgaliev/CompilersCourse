@@ -64,7 +64,7 @@ int Driver::Evaluate() {
 
   method_visitor.Visit(main_function);
 
-  root.PrintTree("symbol_tree.txt");
+  //root.PrintTree("symbol_tree.txt");
   // Interpreter interpreter(root);
   // int interpreter_result = interpreter.GetResult(program);
 
