@@ -20,7 +20,7 @@ public:
 private:
   Type* type_;
   std::string identifier_ = "main";
-  FormalList* formals_{};
+  FormalList* formals_ = new FormalList();
   StatementList* statements_;
 };
 

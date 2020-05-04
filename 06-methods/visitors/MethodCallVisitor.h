@@ -6,11 +6,12 @@
 #include <method-mechanisms/FunctionTable.h>
 #include <symbol_table/ScopeLayerTree.h>
 #include "TemplateVisitor.h"
+#include <objects/objs/VariableObject.h>
 
 class MethodCallVisitor : public TemplateVisitor<Object *> {
  public:
   MethodCallVisitor(
-    ScopeLayer *method_scope, const std::shared_ptr<MethodType>& method, VariableObject *object);
+    ScopeLayer *method_scope, std::shared_ptr<MethodType> method, VariableObject *object);
 
   void SetTree(ScopeLayerTree *tree);
 

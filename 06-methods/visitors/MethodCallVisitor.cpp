@@ -5,19 +5,21 @@
 #include "MethodCallVisitor.h"
 
 #include "elements.h"
-MethodCallVisitor::MethodCallVisitor(ScopeLayer *method_scope, const std::shared_ptr<MethodType>& method, VariableObject* this_obj) :
-  root_layer(method_scope),
+MethodCallVisitor::MethodCallVisitor(ScopeLayer *method_scope,
+                                     std::shared_ptr<MethodType> method,
+                                     VariableObject *this_obj) :
   frame(method->GetMethodDeclaration()->GetFormals()->GetSize()),
-  this_(this_obj){
+  root_layer(method_scope),
+  this_(this_obj) {
   current_layer_ = root_layer;
   offsets_.push(0);
   tos_value_ = new VariableObject(
     new PrimitiveSimpleType(
       new SimpleType("int")),
-      0);
-  std::vector<Object*> fields;
+    0);
+  std::vector<Object *> fields;
   int index = -1;
-  for (const auto& field : this_obj->GetFields()) {
+  for (const auto &field : this_obj->GetFields()) {
     fields.push_back(field.second);
     table_.CreateVariable(field.first);
     table_.Put(field.first, index);
@@ -123,8 +125,10 @@ void MethodCallVisitor::Visit(SoutStatement *sout_statement) {
   std::cout << Accept(sout_statement->GetExpression())->GetValue() << std::endl;
 }
 void MethodCallVisitor::Visit(StatementList *statement_list) {
-  for (auto st: statement_list->GetStatements()) {
-    st->Accept(this);
+  for (auto statement : statement_list->GetStatements()) {
+    if (!returned_) {
+      statement->Accept(this);
+    }
   }
 }
 void MethodCallVisitor::Visit(WhileStatement *while_statement) {
@@ -314,39 +318,42 @@ void MethodCallVisitor::Visit(TypeIdentifier *type_identifier) {
 }
 void MethodCallVisitor::Visit(MethodInvocation *method_invocation) {
   std::cout << "Method called " << method_invocation->GetIdentifier() << std::endl;
-  auto method_type = current_layer_->Get(Symbol(method_invocation->GetIdentifier()));
+  /*auto method_type = current_layer_->Get(Symbol(method_invocation->GetIdentifier()));
 
   std::shared_ptr<MethodType> method_converted = std::dynamic_pointer_cast<MethodType>(method_type);
   if (method_converted == nullptr) {
     throw std::runtime_error("Method not defined");
-  }
-  auto *object = dynamic_cast<VariableObject*>(Accept(method_invocation->GetExpression()));
+  }*/
+
+  auto *object = dynamic_cast<VariableObject *>(Accept(method_invocation->GetExpression()));
 
   std::string object_class = object->GetType()->GetTypeName();
   auto methods = ClassStorage::GetInstance().GetMethods(Symbol(object_class));
-  if (methods.find(Symbol(method_invocation->GetIdentifier()))== methods.end()) {
+  if (methods.find(Symbol(method_invocation->GetIdentifier())) == methods.end()) {
     throw std::runtime_error("Can't call this method from object of this type");
   }
-
-  std::vector<Object*> params;
-  ExpressionList* expression_list;
-  expression_list->AddExpression(method_invocation->GetFirst());
+  std::vector<Object *> params;
+  auto *expression_list = new ExpressionList();
+  if (method_invocation->GetFirst() != nullptr) {
+    expression_list->AddExpression(method_invocation->GetFirst());
+  }
   for (auto expr: method_invocation->GetExpressionList()->GetExpressions()) {
     expression_list->AddExpression(expr);
   }
   for (auto expr : expression_list->GetExpressions()) {
     params.push_back(Accept(expr));
   }
+  auto method = methods[Symbol(method_invocation->GetIdentifier())];
 
   MethodCallVisitor new_visitor(
     tree_->GetScopeByName(Symbol(method_invocation->GetIdentifier())),
-    method_converted,
+    method,
     object
   );
   new_visitor.SetParams(params);
-
+  new_visitor.SetTree(tree_);
   new_visitor.GetFrame().SetParentFrame(&frame);
-  new_visitor.Visit(methods[Symbol(method_invocation->GetIdentifier())]);
+  new_visitor.Visit(method->GetMethodDeclaration());
   tos_value_ = frame.GetReturnValue();
 }
 

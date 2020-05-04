@@ -4,18 +4,12 @@
 
 #include <iostream>
 
-SymbolTreeVisitor::SymbolTreeVisitor() : tree_(new ScopeLayer) {
+SymbolTreeVisitor::SymbolTreeVisitor() : tree_(new ScopeLayer()) {
   current_layer_ = tree_.root_;
-  declared_types_.insert("boolean");
-  declared_types_.insert("int");
-  declared_types_.insert("void");
 }
 
 void SymbolTreeVisitor::Visit(SimpleType *simple_type) {
-  const std::string &type = simple_type->GetSimpleTypeIdentifier();
-  if (declared_types_.find(type) == declared_types_.end()) {
-    throw std::runtime_error("Type not declared");
-  }
+  /// do nothing
 }
 void SymbolTreeVisitor::Visit(ArrayType *array_type) {
   array_type->GetSimpleType()->Accept(this);
@@ -126,14 +120,23 @@ void SymbolTreeVisitor::Visit(ParenthesisExpression *parenthesis_expression) {
   parenthesis_expression->GetExpression()->Accept(this);
 }
 void SymbolTreeVisitor::Visit(ThisExpression *this_expression) {
-  /// TODO - check if not in class
+  /// do nothing
 }
 void SymbolTreeVisitor::Visit(BoolExpression *bool_expression) {
   /// do nothing
 }
 void SymbolTreeVisitor::Visit(Declaration *declaration) {
   if (declaration->IsVariable()) {
-    declaration->GetVariableDeclaration()->Accept(this);
+    auto variable_declaration = declaration->GetVariableDeclaration();
+    if (variable_declaration->GetType()->IsSimpleType()) {
+      auto var = current_layer_->DeclareSimpleVariable(Symbol(variable_declaration->GetIdentifier()),
+                                                       variable_declaration->GetType()->GetSimpleType());
+      classes_[current_class_]->AddField(Symbol(variable_declaration->GetIdentifier()), var);
+    } else {
+      auto var = current_layer_->DeclareArrayVariable(Symbol(variable_declaration->GetIdentifier()),
+                                                      variable_declaration->GetType()->GetArrayType());
+      classes_[current_class_]->AddField(Symbol(variable_declaration->GetIdentifier()), var);
+    }
   } else {
     declaration->GetMethodDeclaration()->Accept(this);
   }
@@ -146,41 +149,36 @@ void SymbolTreeVisitor::Visit(DeclarationList *declaration_list) {
 void SymbolTreeVisitor::Visit(MethodDeclaration *method_declaration) {
   auto method = current_layer_->DeclareMethod(Symbol(method_declaration->GetIdentifier()),
                                               method_declaration);
+  classes_[current_class_]->AddMethod(Symbol(method_declaration->GetIdentifier()), method);
   auto new_layer = new ScopeLayer(current_layer_);
+  tree_.AddMapping(Symbol(method_declaration->GetIdentifier()), new_layer);
   current_layer_ = new_layer;
   method_declaration->GetType()->Accept(this);
   method_declaration->GetFormals()->Accept(this);
   method_declaration->GetStatements()->Accept(this);
 
-  tree_.AddMapping(Symbol(method_declaration->GetIdentifier()), new_layer);
-
   current_layer_ = current_layer_->GetParent();
-  classes_[current_class_]->AddMethod(Symbol(method_declaration->GetIdentifier()), method);
 }
 void SymbolTreeVisitor::Visit(VariableDeclaration *variable_declaration) {
-
   if (variable_declaration->GetType()->IsSimpleType()) {
     auto var = current_layer_->DeclareSimpleVariable(Symbol(variable_declaration->GetIdentifier()),
                                                      variable_declaration->GetType()->GetSimpleType());
-    classes_[current_class_]->AddField(Symbol(variable_declaration->GetIdentifier()), var);
   } else {
     auto var = current_layer_->DeclareArrayVariable(Symbol(variable_declaration->GetIdentifier()),
                                                     variable_declaration->GetType()->GetArrayType());
-    classes_[current_class_]->AddField(Symbol(variable_declaration->GetIdentifier()), var);
   }
 }
 void SymbolTreeVisitor::Visit(ClassDeclaration *class_declaration) {
   current_class_ = Symbol(class_declaration->GetIdentifier());
   auto class_decl = current_layer_->DeclareClass(current_class_,
                                                  class_declaration);
+  classes_[current_class_] = class_decl;
   auto new_layer = new ScopeLayer(current_layer_);
+  tree_.AddMapping(Symbol(class_declaration->GetIdentifier()), new_layer);
   current_layer_ = new_layer;
   class_declaration->GetDeclarationList()->Accept(this);
 
-  tree_.AddMapping(Symbol(class_declaration->GetIdentifier()), new_layer);
-
   current_layer_ = current_layer_->GetParent();
-  classes_[current_class_] = class_decl;
 }
 void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {
   for (auto class_decl: class_declaration_list->GetClassDeclarations()) {
@@ -193,13 +191,10 @@ void SymbolTreeVisitor::Visit(MainClass *main_class) {
   main_class_ = main;
   current_class_ = Symbol("main");
   auto new_layer = new ScopeLayer(current_layer_);
+  tree_.AddMapping(Symbol("main"), new_layer);
   current_layer_ = new_layer;
   main_class->GetStatementList()->Accept(this);
-
-  tree_.AddMapping(Symbol(main_class->GetIdentifier()), new_layer);
-
   current_layer_ = current_layer_->GetParent();
-
 }
 void SymbolTreeVisitor::Visit(Type *type) {
   if (type->IsSimpleType()) {
@@ -209,17 +204,18 @@ void SymbolTreeVisitor::Visit(Type *type) {
   }
 }
 void SymbolTreeVisitor::Visit(TypeIdentifier *type_identifier) {
-  if (declared_types_.find(type_identifier->GetIdentifier()) == declared_types_.end()) {
-    throw std::runtime_error("Type not declared");
-  }
+  /// do nothing (check for the type is automatically in creation of VariableObject)
 }
 void SymbolTreeVisitor::Visit(MethodInvocation *method_invocation) {
   method_invocation->GetExpression()->Accept(this);
-  method_invocation->GetFirst()->Accept(this);
+  if (method_invocation->GetFirst() != nullptr) {
+    method_invocation->GetFirst()->Accept(this);
+  }
   method_invocation->GetExpressionList()->Accept(this);
   const auto &method_name = method_invocation->GetIdentifier();
-  current_layer_->Get(Symbol(method_name));
-  /// TODO - expression type .method
+  /// check if Method exists
+  tree_.GetScopeByName(Symbol(method_name));
+
 }
 void SymbolTreeVisitor::Visit(FormalList *formal_list) {
   for (auto formal: formal_list->GetFormals()) {

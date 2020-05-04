@@ -14,7 +14,7 @@ std::unordered_map<Symbol, Object *> ArrayObject::GetFields() {
 
 void ArrayObject::SetValue(Object *object) {
   auto array = dynamic_cast<ArrayObject *>(object);
-  buffer_.resize(array->buffer_.size());
+  this->Resize(array->GetSize());
   for (size_t i = 0; i < buffer_.size(); ++i) {
     buffer_[i]->SetValue(array->buffer_[i]);
   }
@@ -46,6 +46,7 @@ PrimitiveArrayType *ArrayObject::GetType() {
   return type_;
 }
 void ArrayObject::Resize(size_t size) {
+  buffer_.clear();
   for (size_t i = 0;i < size; ++i) {
     buffer_.push_back(new VariableObject(element_type_));
   }

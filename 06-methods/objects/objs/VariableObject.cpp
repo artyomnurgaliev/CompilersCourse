@@ -30,7 +30,7 @@ void VariableObject::SetValue(int value) {
   }
 }
 void VariableObject::SetValue(Object *object) {
-  if ((PrimitiveSimpleType*)object->GetType() == this->GetType()) {
+  if (object->GetType()->GetTypeName() == this->GetType()->GetTypeName()) {
     type_ = (PrimitiveSimpleType *) object->GetType();
   } else {
     throw std::runtime_error("Different types");
@@ -39,9 +39,6 @@ void VariableObject::SetValue(Object *object) {
   fields_ = std::move(object->GetFields());
 }
 int VariableObject::GetValue() {
-  if (type_->IsClass()) {
-    throw std::runtime_error("Trying to get 'int' value from Class object");
-  }
   return value_;
 }
 std::unordered_map<Symbol, Object *> VariableObject::GetFields() {

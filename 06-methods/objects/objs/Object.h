@@ -1,6 +1,7 @@
 #pragma once
 #include <objects/ObjectType.h>
 #include <symbol_table/Symbol.h>
+#include <objects/PrimitiveType.h>
 class Object {
  public:
   virtual void SetValue(int value) = 0;

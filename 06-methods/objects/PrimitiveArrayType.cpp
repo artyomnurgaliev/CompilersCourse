@@ -12,3 +12,6 @@ PrimitiveSimpleType* PrimitiveArrayType::GetSimpleType() {
 bool PrimitiveArrayType::IsArray() {
   return true;
 }
+PrimitiveArrayType::PrimitiveArrayType(PrimitiveSimpleType *primitive_type): simple_type_(primitive_type) {
+
+}

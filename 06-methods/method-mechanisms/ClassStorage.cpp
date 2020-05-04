@@ -7,12 +7,12 @@ ClassStorage &ClassStorage::GetInstance() {
     return storage;
 }
 
-void ClassStorage::SetMethod(const Symbol& symbol, std::unordered_map<Symbol, MethodDeclaration*> methods) {
+void ClassStorage::SetMethod(const Symbol& symbol, std::unordered_map<Symbol, std::shared_ptr<MethodType>> methods) {
     class_methods_[symbol] = std::move(methods);
 }
 
 
-std::unordered_map<Symbol, MethodDeclaration*> ClassStorage::GetMethods(const Symbol& symbol) const {
+std::unordered_map<Symbol, std::shared_ptr<MethodType>> ClassStorage::GetMethods(const Symbol& symbol) const {
     if (class_methods_.find(symbol) != class_methods_.end()) {
         return class_methods_.at(symbol);
     } else {

@@ -39,6 +39,8 @@ set(
         nterms_classes/Program.cpp
         nterms_classes/BinaryOperator.cpp
         nterms_classes/BinaryOperator.h
+        nterms_classes/expressions/BinaryOperatorExpression.h
+        nterms_classes/expressions/BinaryOperatorExpression.cpp
         nterms_classes/expressions/AccessToArrayElementExpression.cpp
         nterms_classes/expressions/AccessToArrayElementExpression.h
         nterms_classes/expressions/ArrayLengthExpression.cpp
@@ -55,6 +57,10 @@ set(
         nterms_classes/expressions/ThisExpression.h
         nterms_classes/expressions/MethodInvocationExpression.cpp
         nterms_classes/expressions/MethodInvocationExpression.h
+        nterms_classes/expressions/NumberExpression.h
+        nterms_classes/expressions/NumberExpression.cpp
+        nterms_classes/expressions/IdentExpression.cpp
+        nterms_classes/expressions/IdentExpression.h
         nterms_classes/Lvalue/Lvalue.h
         nterms_classes/Lvalue/SimpleLvalue.cpp
         nterms_classes/Lvalue/SimpleLvalue.h

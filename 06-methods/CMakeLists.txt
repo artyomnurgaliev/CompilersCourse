@@ -6,7 +6,6 @@ set(GRAMMAR_PROJECT "${PROJECT_NAME}GrammarProject")
 set(
     SOURCES
     driver.cpp
-    visitors/Interpreter.cpp
         visitors/PrintVisitor.cpp
     symbol_table/Symbol.cpp
         symbol_table/ScopeLayer.cpp

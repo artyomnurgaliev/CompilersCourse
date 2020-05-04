@@ -80,6 +80,7 @@
     PERCENT "%"
     LPAREN "("
     RPAREN ")"
+    BRACKETS "[]"
     LSQUAREBRACKET "["
     RSQUAREBRACKET "]"
     COMMA ","
@@ -159,7 +160,7 @@ simple_type:
      type_identifier { $$ = new SimpleType($1);};
 
 array_type:
-    simple_type "[" "]" { $$ = new ArrayType($1); };
+    simple_type "[]" { $$ = new ArrayType($1); };
 
 type_identifier:
     "identifier" { $$ = new TypeIdentifier($1); };

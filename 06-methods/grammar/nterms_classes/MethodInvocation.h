@@ -17,7 +17,7 @@ private:
   Expression* expression_;
   std::string identifier_;
   Expression* first_{};
-  ExpressionList* expression_list_{};
+  ExpressionList* expression_list_ = new ExpressionList();
 };
 
 
