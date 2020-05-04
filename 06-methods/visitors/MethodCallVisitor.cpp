@@ -1,7 +1,3 @@
-//
-// Created by Pavel Akhtyamov on 25.03.2020.
-//
-
 #include <iostream>
 #include <method-mechanisms/ClassStorage.h>
 #include <objects/objs/ArrayObject.h>
@@ -9,10 +5,10 @@
 #include "MethodCallVisitor.h"
 
 #include "elements.h"
-MethodCallVisitor::MethodCallVisitor(ScopeLayer *method_scope, const std::shared_ptr<MethodType>& method, VariableObject* object) :
+MethodCallVisitor::MethodCallVisitor(ScopeLayer *method_scope, const std::shared_ptr<MethodType>& method, VariableObject* this_obj) :
   root_layer(method_scope),
   frame(method->GetMethodDeclaration()->GetFormals()->GetSize()),
-  this_(object){
+  this_(this_obj){
   current_layer_ = root_layer;
   offsets_.push(0);
   tos_value_ = new VariableObject(
@@ -21,7 +17,7 @@ MethodCallVisitor::MethodCallVisitor(ScopeLayer *method_scope, const std::shared
       0);
   std::vector<Object*> fields;
   int index = -1;
-  for (const auto &field : object->) {
+  for (const auto& field : this_obj->GetFields()) {
     fields.push_back(field.second);
     table_.CreateVariable(field.first);
     table_.Put(field.first, index);
@@ -317,7 +313,41 @@ void MethodCallVisitor::Visit(TypeIdentifier *type_identifier) {
   /// do nothing
 }
 void MethodCallVisitor::Visit(MethodInvocation *method_invocation) {
+  std::cout << "Method called " << method_invocation->GetIdentifier() << std::endl;
+  auto method_type = current_layer_->Get(Symbol(method_invocation->GetIdentifier()));
 
+  std::shared_ptr<MethodType> method_converted = std::dynamic_pointer_cast<MethodType>(method_type);
+  if (method_converted == nullptr) {
+    throw std::runtime_error("Method not defined");
+  }
+  auto *object = dynamic_cast<VariableObject*>(Accept(method_invocation->GetExpression()));
+
+  std::string object_class = object->GetType()->GetTypeName();
+  auto methods = ClassStorage::GetInstance().GetMethods(Symbol(object_class));
+  if (methods.find(Symbol(method_invocation->GetIdentifier()))== methods.end()) {
+    throw std::runtime_error("Can't call this method from object of this type");
+  }
+
+  std::vector<Object*> params;
+  ExpressionList* expression_list;
+  expression_list->AddExpression(method_invocation->GetFirst());
+  for (auto expr: method_invocation->GetExpressionList()->GetExpressions()) {
+    expression_list->AddExpression(expr);
+  }
+  for (auto expr : expression_list->GetExpressions()) {
+    params.push_back(Accept(expr));
+  }
+
+  MethodCallVisitor new_visitor(
+    tree_->GetScopeByName(Symbol(method_invocation->GetIdentifier())),
+    method_converted,
+    object
+  );
+  new_visitor.SetParams(params);
+
+  new_visitor.GetFrame().SetParentFrame(&frame);
+  new_visitor.Visit(methods[Symbol(method_invocation->GetIdentifier())]);
+  tos_value_ = frame.GetReturnValue();
 }
 
 void MethodCallVisitor::Visit(FormalList *formal_list) {
@@ -350,150 +380,13 @@ void MethodCallVisitor::Visit(LocalVariableDeclarationStatement *local_variable_
   local_variable_declaration_statement->GetLocalVariableDeclaration()->Accept(this);
 }
 
-void MethodCallVisitor::Visit(NumberExpression *expression) {
-  tos_value_ = expression->value_;
-}
-
-void MethodCallVisitor::Visit(AddExpression *expression) {
-  tos_value_ = Accept(expression->first) + Accept(expression->second);
-}
-
-void MethodCallVisitor::Visit(SubstractExpression *expression) {
-  tos_value_ = Accept(expression->first) - Accept(expression->second);
-}
-
-void MethodCallVisitor::Visit(MulExpression *expression) {
-  tos_value_ = Accept(expression->first) * Accept(expression->second);
-}
-
-void MethodCallVisitor::Visit(DivExpression *expression) {
-  tos_value_ = Accept(expression->first) / Accept(expression->second);
-}
-
-void MethodCallVisitor::Visit(IdentExpression *expression) {
-  int index = table_.Get(Symbol(expression->ident_));
-  tos_value_ = frame.Get(index);
-}
-
-void MethodCallVisitor::Visit(Assignment *assignment) {
-  int value = Accept(assignment->expression_);
-
-  int index = table_.Get(Symbol(assignment->variable_));
-  frame.Set(index, value);
-}
-
-void MethodCallVisitor::Visit(VarDecl *var_decl) {
-  size_t index = frame.AllocVariable();
-  table_.CreateVariable(Symbol(var_decl->variable_));
-  table_.Put(Symbol(var_decl->variable_), index);
-
-}
-
-void MethodCallVisitor::Visit(PrintStatement *statement) {
-  int value = Accept(statement->expression_);
-
-  std::cout << value << std::endl;
-}
-
-void MethodCallVisitor::Visit(AssignmentList *assignment_list) {
-  for (Statement *assignment: assignment_list->statements_) {
-    if (!returned_) {
-      assignment->Accept(this);
-    }
-  }
-}
-
-void MethodCallVisitor::Visit(ScopeAssignmentList *list) {
-  std::cout << "Going inside" << std::endl;
-
-  current_layer_ = current_layer_->GetChild(offsets_.top());
-
-  offsets_.push(0);
-  frame.AllocScope();
-  table_.BeginScope();
-  list->statement_list->Accept(this);
-
-  offsets_.pop();
-  size_t index = offsets_.top();
-
-  offsets_.pop();
-  offsets_.push(index + 1);
-
-  current_layer_ = current_layer_->GetParent();
-  frame.DeallocScope();
-  table_.EndScope();
-}
-
-void MethodCallVisitor::Visit(Program *program) {
-
-}
-
-void MethodCallVisitor::Visit(ParamList *param_list) {
-  int index = -1;
-  for (auto param: param_list->params_) {
-    table_.CreateVariable(Symbol(param));
-    table_.Put(Symbol(param), index);
-    --index;
-  }
-}
-
-void MethodCallVisitor::Visit(Function *function) {
-  function->param_list_->Accept(this);
-  function->statements_->Accept(this);
-}
-
-void MethodCallVisitor::SetParams(const std::vector<int> &params) {
-  frame.SetParams(params);
-}
-
-void MethodCallVisitor::Visit(FunctionCallExpression *statement) {
-  std::cerr << "Function called " << statement->name_ << std::endl;
-  auto function_type = current_layer_->Get(statement->name_);
-
-  std::shared_ptr<FunctionType> func_converted = std::dynamic_pointer_cast<FunctionType>(function_type);
-
-  if (func_converted == nullptr) {
-    throw std::runtime_error("Function not defined");
-  }
-
-  std::vector<int> params;
-
-  for (auto param : statement->param_list_->params_) {
-    params.push_back(Accept(param));
-  }
-
-  MethodCallVisitor new_visitor(
-    tree_->GetFunctionScopeByName(statement->name_),
-    func_converted
-  );
-  new_visitor.SetParams(params);
-
-  new_visitor.GetFrame().SetParentFrame(&frame);
-  new_visitor.Visit(ClassStorage::GetInstance().GetMethods(Symbol(statement->name_)));
-
-  tos_value_ = frame.GetReturnValue();
-}
-
-void MethodCallVisitor::Visit(FunctionList *function_list) {
-
-}
-
-void MethodCallVisitor::Visit(ParamValueList *value_list) {
-
-}
-
-void MethodCallVisitor::Visit(ReturnStatement *return_statement) {
-  if (frame.HasParent()) {
-    frame.SetParentReturnValue(Accept(return_statement->return_expression_));
-  }
-  returned_ = true;
-}
-
 void MethodCallVisitor::SetTree(ScopeLayerTree *tree) {
   tree_ = tree;
-
 }
 
 Frame &MethodCallVisitor::GetFrame() {
   return frame;
+}
+void MethodCallVisitor::SetParams(const std::vector<Object *> &params) {
+  frame.SetParams(params);
 }

@@ -14,7 +14,7 @@ class MethodCallVisitor : public TemplateVisitor<Object *> {
 
   void SetTree(ScopeLayerTree *tree);
 
-  void SetParams(const std::vector<int> &params);
+  void SetParams(const std::vector<Object*> &params);
 
   void Visit(SimpleType *simple_type) override;
   void Visit(ArrayType *array_type) override;
