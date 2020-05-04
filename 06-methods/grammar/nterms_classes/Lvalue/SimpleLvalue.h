@@ -4,6 +4,7 @@
 #include "Lvalue.h"
 class SimpleLvalue : public Lvalue {
 public:
+  bool IsSimple() override;
   explicit SimpleLvalue(std::string identifier);
   void Accept(Visitor* visitor) override;
   const std::string &GetIdentifier() const;

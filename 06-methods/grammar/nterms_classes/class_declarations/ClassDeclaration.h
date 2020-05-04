@@ -3,6 +3,7 @@
 #include <nterms_classes/declarations/DeclarationList.h>
 class ClassDeclaration :public BaseElement{
 public:
+  ClassDeclaration() = default;
   ClassDeclaration(std::string identifier, DeclarationList* declaration_list);
   ClassDeclaration(std::string identifier, std::string extends_identifier, DeclarationList* declaration_list);
   void Accept(Visitor* visitor) override;
@@ -14,8 +15,8 @@ public:
   void SetDeclarationList(DeclarationList *declaration_list);
 
 private:
-  std::string identifier_;
-  std::string extends_identifier_;
-  DeclarationList* declaration_list_;
+  std::string identifier_ = "";
+  std::string extends_identifier_ = "";
+  DeclarationList* declaration_list_ = nullptr;
 };
 

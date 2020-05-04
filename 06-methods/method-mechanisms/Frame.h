@@ -1,43 +1,44 @@
-//
-// Created by Pavel Akhtyamov on 25.03.2020.
-//
-
 #pragma once
 
 #include <objects/MethodType.h>
 #include <stack>
 
 #include <memory>
+#include <objects/objs/Object.h>
 class Frame {
  public:
-  explicit Frame(std::shared_ptr<MethodType> method);
-  void SetParams(const std::vector<int>& values);
+  explicit Frame(size_t params_size);
+  void SetParams(const std::vector<Object*>& values);
+  void SetFields(const std::vector<Object*>& values);
 
-  size_t AllocVariable();
+  size_t AllocVariable(PrimitiveType* primitive_type);
 
   void DeallocScope();
   void AllocScope();
 
-  int Get(int index) const;
+  Object* Get(int index) const;
 
-  void Set(int index, int value);
+  void Set(int index, Object* value);
 
   void SetParentFrame(Frame* frame);
 
-  int GetReturnValue() const;
+  Object* GetReturnValue() const;
 
-  void SetParentReturnValue(int value);
+  void SetParentReturnValue(Object* value);
 
   bool HasParent();
+  int GetFieldsSize() const;
 
 private:
+  int params_size_ = 0;
+  int fields_size_ = 0;
+
   std::stack<int> offsets_;
-  std::vector<int> params_;
-  std::vector<int> variables_;
+  std::vector<Object*> params_;
+  std::vector<Object*> variables_;
+  Object* return_value_{};
 
-  int return_value_ = 0;
-
-  void SetReturnValue(int value);
+  void SetReturnValue(Object* value);
 
   Frame* parent_frame = nullptr;
 

@@ -9,17 +9,17 @@
 #include <unordered_map>
 #include <vector>
 #include <objects/ClassType.h>
-#include <objects/MainClassType.h>
 #include <objects/MethodType.h>
-#include <objects/PrimitiveObjectType.h>
+#include <objects/PrimitiveSimpleType.h>
+#include <objects/PrimitiveArrayType.h>
 
 class ScopeLayer {
  public:
     explicit ScopeLayer(ScopeLayer* parent);
     ScopeLayer();
     ~ScopeLayer();
-    std::shared_ptr<MainClassType> DeclareMainClass(Symbol symbol, StatementList* statement_list);
-    std::shared_ptr<PrimitiveObjectType> DeclareVariable(Symbol symbol, Type* type);
+    std::shared_ptr<PrimitiveSimpleType> DeclareSimpleVariable(Symbol symbol, SimpleType* type);
+    std::shared_ptr<PrimitiveArrayType> DeclareArrayVariable(Symbol symbol, ArrayType* type);
     std::shared_ptr<MethodType> DeclareMethod(Symbol symbol, MethodDeclaration* method_declaration);
     std::shared_ptr<ClassType> DeclareClass(Symbol symbol, ClassDeclaration* class_declaration);
     void Put(Symbol symbol, std::shared_ptr<ObjectType> value);

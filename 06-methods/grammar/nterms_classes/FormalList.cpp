@@ -10,3 +10,6 @@ void FormalList::AddFormal(Formal* formal) {
 }
 void FormalList::Accept(Visitor *visitor) {visitor->Visit(this);}
 const std::vector<Formal*> &FormalList::GetFormals() const { return formals_; }
+int FormalList::GetSize() {
+  return formals_.size();
+}

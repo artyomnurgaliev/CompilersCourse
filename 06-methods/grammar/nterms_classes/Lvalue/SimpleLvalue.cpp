@@ -11,3 +11,6 @@ const std::string &SimpleLvalue::GetIdentifier() const { return identifier_; }
 void SimpleLvalue::SetIdentifier(const std::string &identifier) {
   identifier_ = identifier;
 }
+bool SimpleLvalue::IsSimple() {
+  return true;
+}

@@ -24,7 +24,7 @@ class ScopeLayerTree {
     void AddMapping(Symbol name, ScopeLayer* layer);
 
     /**
-     * Get function by name
+     * GetMethods function by name
      * @param name
      * @return Function scope
      */

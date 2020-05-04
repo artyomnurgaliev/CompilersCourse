@@ -1,15 +1,12 @@
 #pragma once
 
+#include <grammar/base_elements/BaseElement.h>
 #include "include/visitors/Visitor.h"
-#include <base_elements/BaseElement.h>
 
 template<typename T>
 class TemplateVisitor : public Visitor {
  public:
-    T Accept(BaseElement* element) {
-      element->Accept(this);
-      return tos_value_;
-    }
+    T Accept(BaseElement* element);
  protected:
     T tos_value_;
 

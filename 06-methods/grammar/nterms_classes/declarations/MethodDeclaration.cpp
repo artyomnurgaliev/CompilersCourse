@@ -8,11 +8,11 @@
 MethodDeclaration::MethodDeclaration(Type *type, std::string identifier,
                                      FormalList *formals,
                                      StatementList *statements)
-    : type_(type), identifier_(std::move(identifier)), formals_(formals),
-      statements_(statements) {}
+  : type_(type), identifier_(std::move(identifier)), formals_(formals),
+    statements_(statements) {}
 MethodDeclaration::MethodDeclaration(Type *type, std::string identifier,
                                      StatementList *statements)
-    : type_(type), identifier_(std::move(identifier)), statements_(statements) {
+  : type_(type), identifier_(std::move(identifier)), statements_(statements) {
 }
 void MethodDeclaration::Accept(Visitor *visitor) {
   visitor->Visit(this);
@@ -30,4 +30,7 @@ void MethodDeclaration::SetFormals(FormalList *formals) { formals_ = formals; }
 StatementList *MethodDeclaration::GetStatements() const { return statements_; }
 void MethodDeclaration::SetStatements(StatementList *statements) {
   statements_ = statements;
+}
+MethodDeclaration::MethodDeclaration(StatementList *statement_list) :
+    type_(new Type(new SimpleType("void"))), identifier_("main"), statements_(statement_list) {
 }

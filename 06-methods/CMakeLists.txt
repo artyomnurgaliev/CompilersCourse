@@ -13,16 +13,10 @@ set(
     symbol_table/ScopeLayerTree.cpp
     objects/ClassType.h
     objects/ClassType.cpp
-    objects/MainClassType.h
-    objects/MainClassType.cpp
-    objects/MethodType.h
+        objects/MethodType.h
     objects/MethodType.cpp
-    objects/MainClassType.h
-    objects/MainClassType.cpp
-    objects/ObjectType.h
+        objects/ObjectType.h
     objects/ObjectType.cpp
-    objects/PrimitiveObjectType.h
-    objects/PrimitiveObjectType.cpp
         visitors/SymbolTreeVisitor.cpp
         visitors/MethodCallVisitor.cpp
         visitors/MethodCallVisitor.h
@@ -30,9 +24,12 @@ set(
     method-mechanisms/Frame.h
     method-mechanisms/FunctionTable.cpp
     method-mechanisms/FunctionTable.h
-    method-mechanisms/FunctionStorage.cpp
-    method-mechanisms/FunctionStorage.h
-)
+        method-mechanisms/ClassStorage.cpp
+        method-mechanisms/ClassStorage.h
+        visitors/TemplateVisitor.h
+        visitors/TemplateVisitor.cpp
+
+        objects/objs/VariableObject.cpp objects/objs/VariableObject.h objects/objs/ArrayObject.cpp objects/objs/ArrayObject.h objects/PrimitiveSimpleType.cpp objects/PrimitiveSimpleType.h objects/PrimitiveArrayType.cpp objects/PrimitiveArrayType.h objects/PrimitiveType.cpp objects/PrimitiveType.h)
 
 add_subdirectory(grammar)
 

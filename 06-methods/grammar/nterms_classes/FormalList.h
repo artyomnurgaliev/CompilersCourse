@@ -8,7 +8,7 @@ public:
   void AddFormal(Formal* formal);
   void Accept(Visitor* visitor) override;
   const std::vector<Formal*> &GetFormals() const;
-
+  int GetSize();
 private:
   std::vector<Formal*> formals_;
 };

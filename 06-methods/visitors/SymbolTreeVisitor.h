@@ -62,10 +62,11 @@ class SymbolTreeVisitor: public Visitor {
 
     std::unordered_map<Symbol, std::shared_ptr<ClassType>> GetClasses() const;
     std::unordered_set<std::string> GetDeclaredTypes();
+    std::shared_ptr<MethodType> GetMainClass() const;
 private:
     std::unordered_set<std::string> declared_types_;
     std::unordered_map<Symbol, std::shared_ptr<ClassType>> classes_;
-    std::shared_ptr<MainClassType> main_class_;
+    std::shared_ptr<MethodType> main_class_;
     Symbol current_class_;
     ScopeLayerTree tree_;
     ScopeLayer* current_layer_;

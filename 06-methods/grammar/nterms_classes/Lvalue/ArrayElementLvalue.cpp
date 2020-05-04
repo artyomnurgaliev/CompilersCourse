@@ -18,3 +18,6 @@ Expression *ArrayElementLvalue::GetExpression() const { return expression_; }
 void ArrayElementLvalue::SetExpression(Expression *expression) {
   expression_ = expression;
 }
+bool ArrayElementLvalue::IsSimple() {
+  return false;
+}

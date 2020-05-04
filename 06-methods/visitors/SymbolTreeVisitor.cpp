@@ -145,7 +145,7 @@ void SymbolTreeVisitor::Visit(DeclarationList *declaration_list) {
 }
 void SymbolTreeVisitor::Visit(MethodDeclaration *method_declaration) {
   auto method = current_layer_->DeclareMethod(Symbol(method_declaration->GetIdentifier()),
-                                method_declaration);
+                                              method_declaration);
   auto new_layer = new ScopeLayer(current_layer_);
   current_layer_ = new_layer;
   method_declaration->GetType()->Accept(this);
@@ -158,12 +158,21 @@ void SymbolTreeVisitor::Visit(MethodDeclaration *method_declaration) {
   classes_[current_class_]->AddMethod(Symbol(method_declaration->GetIdentifier()), method);
 }
 void SymbolTreeVisitor::Visit(VariableDeclaration *variable_declaration) {
-  current_layer_->DeclareVariable(Symbol(variable_declaration->GetIdentifier()), variable_declaration->GetType());
+
+  if (variable_declaration->GetType()->IsSimpleType()) {
+    auto var = current_layer_->DeclareSimpleVariable(Symbol(variable_declaration->GetIdentifier()),
+                                                     variable_declaration->GetType()->GetSimpleType());
+    classes_[current_class_]->AddField(Symbol(variable_declaration->GetIdentifier()), var);
+  } else {
+    auto var = current_layer_->DeclareArrayVariable(Symbol(variable_declaration->GetIdentifier()),
+                                                    variable_declaration->GetType()->GetArrayType());
+    classes_[current_class_]->AddField(Symbol(variable_declaration->GetIdentifier()), var);
+  }
 }
 void SymbolTreeVisitor::Visit(ClassDeclaration *class_declaration) {
   current_class_ = Symbol(class_declaration->GetIdentifier());
   auto class_decl = current_layer_->DeclareClass(current_class_,
-                               class_declaration);
+                                                 class_declaration);
   auto new_layer = new ScopeLayer(current_layer_);
   current_layer_ = new_layer;
   class_declaration->GetDeclarationList()->Accept(this);
@@ -179,10 +188,10 @@ void SymbolTreeVisitor::Visit(ClassDeclarationList *class_declaration_list) {
   }
 }
 void SymbolTreeVisitor::Visit(MainClass *main_class) {
-  auto main = current_layer_->DeclareMainClass(Symbol(main_class->GetIdentifier()),
-                                   main_class->GetStatementList());
+  auto main = current_layer_->DeclareMethod(Symbol("main"),
+                                            new MethodDeclaration(main_class->GetStatementList()));
   main_class_ = main;
-  current_class_ = Symbol("");
+  current_class_ = Symbol("main");
   auto new_layer = new ScopeLayer(current_layer_);
   current_layer_ = new_layer;
   main_class->GetStatementList()->Accept(this);
@@ -208,7 +217,7 @@ void SymbolTreeVisitor::Visit(MethodInvocation *method_invocation) {
   method_invocation->GetExpression()->Accept(this);
   method_invocation->GetFirst()->Accept(this);
   method_invocation->GetExpressionList()->Accept(this);
-  const auto& method_name = method_invocation->GetIdentifier();
+  const auto &method_name = method_invocation->GetIdentifier();
   current_layer_->Get(Symbol(method_name));
   /// TODO - expression type .method
 }
@@ -218,7 +227,13 @@ void SymbolTreeVisitor::Visit(FormalList *formal_list) {
   }
 }
 void SymbolTreeVisitor::Visit(Formal *formal) {
-  current_layer_->DeclareVariable(Symbol(formal->GetIdentifier()), formal->GetType());
+  if (formal->GetType()->IsSimpleType()) {
+    auto var = current_layer_->DeclareSimpleVariable(Symbol(formal->GetIdentifier()),
+                                                     formal->GetType()->GetSimpleType());
+  } else {
+    auto var = current_layer_->DeclareArrayVariable(Symbol(formal->GetIdentifier()),
+                                                    formal->GetType()->GetArrayType());
+  }
 }
 void SymbolTreeVisitor::Visit(BinaryOperator *binary_operator) {
 }
@@ -245,4 +260,7 @@ std::unordered_map<Symbol, std::shared_ptr<ClassType>> SymbolTreeVisitor::GetCla
 }
 std::unordered_set<std::string> SymbolTreeVisitor::GetDeclaredTypes() {
   return declared_types_;
+}
+std::shared_ptr<MethodType> SymbolTreeVisitor::GetMainClass() const {
+  return main_class_;
 }

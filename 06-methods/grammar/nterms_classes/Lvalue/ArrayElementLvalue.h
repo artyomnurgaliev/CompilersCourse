@@ -5,6 +5,7 @@
 
 class ArrayElementLvalue : public Lvalue {
 public:
+  bool IsSimple() override;
   explicit ArrayElementLvalue(std::string identifier, Expression* expression);
   void Accept(Visitor* visitor) override;
   const std::string &GetIdentifier() const;

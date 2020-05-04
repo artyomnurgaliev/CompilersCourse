@@ -1,12 +1,24 @@
 
 #include "MethodType.h"
 #include <nterms_classes/FormalList.h>
-
-MethodType::MethodType(Type *type, FormalList *formal_list) : return_value_type_(type), formal_list_(formal_list){
-}
+/*
 std::string MethodType::GetTypeName() {
   return "Method Object, returning " + return_value_type_->GetType() + " value";
 }
-Type *MethodType::GetType() {
+*/
+Type *MethodType::GetReturnValueType() {
   return return_value_type_;
+}
+/*
+std::string MethodType::GetObject() {
+  return "MethodType";
+}
+ */
+MethodType::MethodType(MethodDeclaration *method_declaration) : method_declaration_(method_declaration),
+                                                                return_value_type_(method_declaration->GetType()),
+                                                                formal_list_(method_declaration->GetFormals()) {
+
+}
+MethodDeclaration *MethodType::GetMethodDeclaration() {
+  return method_declaration_;
 }

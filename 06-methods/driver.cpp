@@ -1,5 +1,5 @@
 #include <visitors/MethodCallVisitor.h>
-#include <method-mechanisms/FunctionStorage.h>
+#include <method-mechanisms/ClassStorage.h>
 #include "driver.hh"
 #include "parser.hh"
 
@@ -36,27 +36,36 @@ int Driver::Evaluate() {
 
     ScopeLayerTree root = visitor.GetRoot();
 
-    /*auto functions = visitor.GetFunctions();
-
-    FunctionStorage& storage = FunctionStorage::GetInstance();
-    for (auto it : functions) {
-        storage.Set(it.first, it.second);
+    auto classes = visitor.GetClasses();
+    auto main_class = visitor.GetMainClass();
+    ClassStorage& storage = ClassStorage::GetInstance();
+    for (const auto& cl : classes) {
+      std::unordered_map<Symbol, MethodDeclaration*> methods;
+      for (const auto& method: cl.second->GetMethodTypes()) {
+        methods[method.first] = method.second->GetMethodDeclaration();
+      }
+      std::unordered_map<Symbol, std::shared_ptr<PrimitiveType>> fields;
+      for (const auto& field: cl.second->GetFieldTypes()) {
+        fields[field.first] = field.second;
+      }
+      storage.SetMethod(cl.first, methods);
+      storage.SetField(cl.first, fields);
     }
 
-    Function* main_function = storage.Get(Symbol("main"));
+    auto main_function = main_class->GetMethodDeclaration();
 
-    std::shared_ptr<FunctionType> function_type = std::dynamic_pointer_cast<FunctionType>(
+    std::shared_ptr<MethodType> method_type = std::dynamic_pointer_cast<MethodType>(
         root.Get(Symbol("main"))
     );
 
-    MethodCallVisitor function_visitor(
-        root.GetFunctionScopeByName(Symbol("main")),
-        function_type
+    MethodCallVisitor method_visitor(
+        root.GetScopeByName(Symbol("main")),
+        method_type
       );
 
-    function_visitor.SetTree(&root);
+    method_visitor.SetTree(&root);
 
-    function_visitor.Visit(main_function);
+    method_visitor.Visit(main_function);
 
     root.PrintTree("symbol_tree.txt");
     // Interpreter interpreter(root);

@@ -1,22 +1,32 @@
-
-
+#include <objects/objs/VariableObject.h>
+#include <objects/objs/ArrayObject.h>
 #include "Frame.h"
-Frame::Frame(std::shared_ptr<FunctionType> function) {
-  params_.resize(function->arguments_.size());
-
-  AllocScope();do
+Frame::Frame(size_t params_size) {
+  params_size_ = params_size;
+  AllocScope();
 }
 
-void Frame::SetParams(const std::vector<int> &values) {
-  if (params_.size() != values.size()) {
+void Frame::SetParams(const std::vector<Object *> &values) {
+  if (values.size() != params_size_) {
     throw std::runtime_error("Mismatched number of arguments");
   }
-  params_ = values;
+  for (auto p: values) {
+    params_.push_back(p);
+  }
 }
-
-size_t Frame::AllocVariable() {
+void Frame::SetFields(const std::vector<Object *> &values) {
+  fields_size_ = values.size();
+  for (auto p: values) {
+    params_.push_back(p);
+  }
+}
+size_t Frame::AllocVariable(PrimitiveType *primitive_type) {
   size_t index = variables_.size();
-  variables_.push_back(0);
+  if (primitive_type->IsArray()) {
+    variables_.push_back(new ArrayObject((PrimitiveArrayType *) primitive_type));
+  } else {
+    variables_.push_back(new VariableObject((PrimitiveSimpleType *) primitive_type));
+  }
 
   return index;
 }
@@ -33,7 +43,7 @@ void Frame::AllocScope() {
   offsets_.push(variables_.size());
 }
 
-int Frame::Get(int index) const {
+Object *Frame::Get(int index) const {
   if (index >= 0) {
     return variables_.at(index);
   } else {
@@ -41,32 +51,35 @@ int Frame::Get(int index) const {
   }
 }
 
-void Frame::Set(int index, int value) {
+void Frame::Set(int index, Object *value) {
   if (index >= 0) {
-    variables_.at(index) = value;
+    variables_.at(index)->SetValue(value);
   } else {
-    params_.at(-index - 1) = value;
+    params_.at(-index - 1)->SetValue(value);
   }
 }
 
-void Frame::SetReturnValue(int value) {
-    return_value_ = value;
+void Frame::SetReturnValue(Object *value) {
+  return_value_ = value;
 }
 
 void Frame::SetParentFrame(Frame *frame) {
-    parent_frame = frame;
+  parent_frame = frame;
 
 }
 
-void Frame::SetParentReturnValue(int value) {
-    parent_frame->return_value_ = value;
+void Frame::SetParentReturnValue(Object *value) {
+  parent_frame->return_value_ = value;
 
 }
 
 bool Frame::HasParent() {
-    return parent_frame != nullptr;
+  return parent_frame != nullptr;
 }
 
-int Frame::GetReturnValue() const {
-    return return_value_;
+Object *Frame::GetReturnValue() const {
+  return return_value_;
+}
+int Frame::GetFieldsSize() const {
+  return fields_size_;
 }
