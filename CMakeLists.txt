@@ -32,5 +32,5 @@ find_package(BISON REQUIRED)
 set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${Compilers_SOURCE_DIR}/bin)
-add_subdirectory(06-methods)
+add_subdirectory(irtree-optimization)
 
