@@ -1,0 +1,73 @@
+class Factorial {
+  public static void main () {
+   int a;
+   a = 1;
+
+   if (a > 1) {
+      int c;
+      c = 3;
+   }
+
+   if (a == 1) {
+      int c;
+      c = 3;
+   } else {
+      int d;
+      d = 4;
+   }
+
+   while (a < 10) {
+     a = a + 1;
+   }
+  }
+}
+
+class Conditions {
+    int a;
+    int b;
+
+    public void CheckIF() {
+        a = 2;
+        if (a > 1) {
+            a = 3;
+        }
+    }
+    public void CheckIFELSE() {
+            a = 2;
+            if (a > 1) {
+                a = 3;
+            } else {
+                a = 4;
+            }
+    }
+    public void CheckWHILE() {
+            b = 3;
+            while (b > 1) {
+                b = b - 1;
+            }
+    }
+}
+
+class Test{
+    int a;
+    boolean b;
+    int c;
+    public boolean ReturnCheck() {
+        c = 1;
+        return c;
+    }
+}
+
+class Offset{
+    Test test1;
+    int a;
+    Test test2;
+    int b;
+
+    public void CheckOffset(Test t1, int c, Test t2, int d) {
+        d = b;
+        t2 = test2;
+        c = a;
+        t1 = test1;
+    }
+}

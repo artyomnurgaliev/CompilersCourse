@@ -8,7 +8,7 @@ class PrimitiveSimpleType : public PrimitiveType {
   bool IsClass();
   bool IsArray() override ;
   std::string GetTypeName() override ;
-
+  size_t GetSize() override ;
   explicit PrimitiveSimpleType(SimpleType* type);
   bool is_class_ = false;
   SimpleType* type_{};

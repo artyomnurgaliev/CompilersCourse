@@ -6,6 +6,7 @@ PrimitiveArrayType::PrimitiveArrayType(ArrayType *type)
 std::string PrimitiveArrayType::GetTypeName() {
   return "Array of" + simple_type_->GetTypeName();
 }
+
 PrimitiveSimpleType* PrimitiveArrayType::GetSimpleType() {
   return simple_type_;
 }
@@ -14,4 +15,8 @@ bool PrimitiveArrayType::IsArray() {
 }
 PrimitiveArrayType::PrimitiveArrayType(PrimitiveSimpleType *primitive_type): simple_type_(primitive_type) {
 
+}
+size_t PrimitiveArrayType::GetSize() {
+  /// TODO - What should be there? size of pointer?
+  return 0;
 }

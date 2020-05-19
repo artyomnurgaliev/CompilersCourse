@@ -18,6 +18,8 @@ std::string IRT::ToString(BinaryOperatorType type) {
       return "AND";
     case BinaryOperatorType::OR:
       return "OR";
+    case BinaryOperatorType::MOD:
+      return "MOD";
   }
 }
 

@@ -1,11 +1,10 @@
+#include <irtree/visitors/PrintVisitor.h>
+#include <visitors/IrtreeBuildVisitor.h>
 #include <visitors/MethodCallVisitor.h>
+#include <visitors/PrintVisitor.h>
+#include <visitors/SymbolTreeVisitor.h>
+#include <include/driver.hh>
 #include <method-mechanisms/ClassStorage.h>
-#include <objects/objs/VariableObject.h>
-#include "driver.hh"
-#include "parser.hh"
-#include "visitors/PrintVisitor.h"
-
-#include "visitors/SymbolTreeVisitor.h"
 
 Driver::Driver() :
   trace_parsing(false),
@@ -64,12 +63,16 @@ int Driver::Evaluate() {
 
   method_visitor.Visit(main_function);
 
-  //root.PrintTree("symbol_tree.txt");
-  // Interpreter interpreter(root);
-  // int interpreter_result = interpreter.GetResult(program);
+  IrtreeBuildVisitor irt_build_visitor;
+  irt_build_visitor.SetTree(&root);
+  irt_build_visitor.Visit(program);
 
-//    delete root;
-  // return interpreter_result;*/
+  IrtMapping methods = irt_build_visitor.GetTrees();
+
+  for (auto func_view = methods.begin(); func_view != methods.end(); ++func_view) {
+    IRT::PrintVisitor print_visitor_irt(func_view->first + "_irt.txt");
+    methods[func_view->first]->Accept(&print_visitor_irt);
+  }
   return 0;
 }
 

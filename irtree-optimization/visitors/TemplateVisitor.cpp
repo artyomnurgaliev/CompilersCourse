@@ -11,3 +11,4 @@ T TemplateVisitor<T>::Accept(BaseElement * element) {
 
 template Object* TemplateVisitor<Object*>::Accept(BaseElement* element);
 template IRT::SubtreeWrapper* TemplateVisitor<IRT::SubtreeWrapper*>::Accept(BaseElement *element);
+template std::string TemplateVisitor<std::string>::Accept(BaseElement *element);

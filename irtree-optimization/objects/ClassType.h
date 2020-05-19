@@ -16,7 +16,7 @@ public:
   std::unordered_map<Symbol, std::shared_ptr<MethodType>> GetMethodTypes();
   std::unordered_map<Symbol, std::shared_ptr<PrimitiveType>> GetFieldTypes();
   ClassDeclaration* GetClassDeclaration();
-  //std::string GetTypeName() override;
+  std::string GetTypeName() override;
   //std::string GetObject() override;
 private:
   ClassDeclaration* class_declaration_;

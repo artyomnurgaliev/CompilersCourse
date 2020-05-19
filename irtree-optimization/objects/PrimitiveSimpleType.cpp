@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <method-mechanisms/ClassStorage.h>
 #include "PrimitiveSimpleType.h"
 
 std::string PrimitiveSimpleType::GetTypeName() {
@@ -13,4 +14,17 @@ PrimitiveSimpleType::PrimitiveSimpleType(SimpleType *type) :type_(type){
 }
 bool PrimitiveSimpleType::IsArray() {
   return false;
+}
+size_t PrimitiveSimpleType::GetSize() {
+  if (!is_class_) {
+    return 4;
+  } else {
+    auto id = type_->GetSimpleTypeIdentifier();
+    auto fields = ClassStorage::GetInstance().GetFields(Symbol(id));
+    size_t size = 0;
+    for (const auto& field: fields) {
+      size += field.second->GetSize();
+    }
+    return size;
+  }
 }

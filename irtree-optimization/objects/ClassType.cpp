@@ -20,10 +20,11 @@ void ClassType::AddField(const Symbol &symbol, std::shared_ptr<PrimitiveType> fi
 std::unordered_map<Symbol, std::shared_ptr<PrimitiveType>> ClassType::GetFieldTypes() {
   return field_types_;
 }
-/*
+
 std::string ClassType::GetTypeName() {
   return "Class";
 }
+/*
 std::string ClassType::GetObject() {
   return "ClassType";
 }

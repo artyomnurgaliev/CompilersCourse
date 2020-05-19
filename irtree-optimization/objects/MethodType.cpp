@@ -1,11 +1,10 @@
 
 #include "MethodType.h"
 #include <nterms_classes/FormalList.h>
-/*
+
 std::string MethodType::GetTypeName() {
   return "Method Object, returning " + return_value_type_->GetType() + " value";
 }
-*/
 Type *MethodType::GetReturnValueType() {
   return return_value_type_;
 }

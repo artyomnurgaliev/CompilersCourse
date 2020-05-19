@@ -7,13 +7,13 @@
 
 #include <string>
 #include <unordered_map>
-#include <function-mechanisms/address/Address.h>
+#include <method-mechanisms/address/Address.h>
 #include <stack>
 #include <vector>
 namespace IRT {
 class FrameTranslator {
  public:
-  FrameTranslator(const std::string& function_name);
+  FrameTranslator(const std::string& function_name, const std::string &class_name);
   void SetupScope();
   void TearDownScope();
 
@@ -24,8 +24,10 @@ class FrameTranslator {
   void AddArgumentAddress(const std::string& name);
 
   Address* FramePointer();
-  Address* GetAddress(const std::string& name);
-  Address* GetReturnValueAddress();
+  IRT::Expression* GetAddress(const std::string& name);
+  IRT::Expression* GetReturnValueAddress();
+ private:
+  Expression *GetField(const std::string &name);
 
  private:
   std::string return_address_ = "::return";
@@ -37,6 +39,7 @@ class FrameTranslator {
   std::stack<std::string> symbols_;
   int word_size_ = 4;
   std::string function_name_;
+  std::string class_name_;
 
   int GetOffset();
   int max_offset_ = 0;

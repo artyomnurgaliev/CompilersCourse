@@ -9,7 +9,7 @@
 class MethodType : public ObjectType {
  public:
    MethodType(MethodDeclaration* method_declaration);
-   //std::string GetTypeName() override;
+   std::string GetTypeName() override;
    Type* GetReturnValueType();
    //std::string GetObject() override;
    MethodDeclaration* GetMethodDeclaration();
