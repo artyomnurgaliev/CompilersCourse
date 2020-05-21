@@ -12,16 +12,26 @@
 #include <irtree/nodes/statements/SeqStatement.h>
 #include <irtree/nodes/statements/MoveStatement.h>
 #include <irtree/types/BinaryOperatorType.h>
+#include <irtree/consts.h>
 #include <objects/PrimitiveSimpleType.h>
 
-IRT::Expression *CreateObject(PrimitiveSimpleType *type) {
+IRT::Expression *CreateArray(IRT::Expression *array_size) {
   auto *irt_expressions = new IRT::ExpressionList();
-  irt_expressions->Add(new IRT::ConstExpression(type->GetSize()));
+  irt_expressions->Add(new IRT::BinopExpression(
+    IRT::BinaryOperatorType::MUL,
+    new IRT::ConstExpression(WORD_SIZE),
+    new IRT::BinopExpression(IRT::BinaryOperatorType::PLUS, array_size, new IRT::ConstExpression(1)
+    ))); // 1 byte - to store length of the array
 
   IRT::Temporary tmp;
   return new IRT::EseqExpression(
-    new IRT::MoveStatement(new IRT::TempExpression(tmp), new IRT::CallExpression(
-      new IRT::NameExpression(IRT::Label("malloc")), irt_expressions)),
+    new IRT::SeqStatement(new IRT::MoveStatement(new IRT::TempExpression(tmp),
+                             new IRT::CallExpression(
+                               new IRT::NameExpression(IRT::Label("malloc")),
+                               irt_expressions)),
+      // store length of the array
+      new IRT::MoveStatement(new IRT::MemExpression(new IRT::TempExpression(tmp)), array_size)
+    ),
     new IRT::TempExpression(tmp)
   );
 }

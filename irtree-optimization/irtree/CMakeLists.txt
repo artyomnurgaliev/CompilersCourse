@@ -63,6 +63,6 @@ set(SOURCES generators/Label.cpp
         types/LogicOperatorType.cpp types/BinaryOperatorType.cpp
         visitors/PrintVisitor.cpp visitors/PrintVisitor.h
         visitors/BaseElements.h nodes/expressions/EseqExpression.cpp
-        nodes/expressions/EseqExpression.h)
+        nodes/expressions/EseqExpression.h consts.h)
 
 add_library(${IR_LIB} ${SOURCES})

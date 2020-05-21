@@ -22,6 +22,17 @@ class Factorial {
   }
 }
 
+class Array {
+    int[] a;
+    int[] b;
+    public void ChangeSize(int size) {
+        a = new int[size];
+        b = new int[size * 2];
+        a[1] = 2;
+        b[2] = 3;
+    }
+}
+
 class Conditions {
     int a;
     int b;

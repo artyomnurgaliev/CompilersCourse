@@ -1,0 +1,1 @@
+int WORD_SIZE = 4;

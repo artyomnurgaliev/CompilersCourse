@@ -66,7 +66,7 @@ set(
         visitors/IrtreeBuildVisitor.cpp
         objects/objs/VariableObject.cpp objects/objs/VariableObject.h objects/objs/ArrayObject.cpp objects/objs/ArrayObject.h objects/PrimitiveSimpleType.cpp objects/PrimitiveSimpleType.h objects/PrimitiveArrayType.cpp objects/PrimitiveArrayType.h objects/PrimitiveType.cpp objects/PrimitiveType.h
 
-        method-mechanisms/FrameTranslator.cpp method-mechanisms/FrameTranslator.h method-mechanisms/address/Address.h method-mechanisms/address/AddressInFrame.cpp method-mechanisms/address/AddressInFrame.h method-mechanisms/address/AddressInRegister.cpp method-mechanisms/address/AddressInRegister.h visitors/TypeResolver.cpp visitors/TypeResolver.h)
+        method-mechanisms/FrameTranslator.cpp method-mechanisms/FrameTranslator.h method-mechanisms/address/Address.h method-mechanisms/address/AddressInFrame.cpp method-mechanisms/address/AddressInFrame.h method-mechanisms/address/AddressInRegister.cpp method-mechanisms/address/AddressInRegister.h visitors/TypeResolver.cpp visitors/TypeResolver.h objects/objs_creation/ArrayCreation.h)
 
 add_subdirectory(grammar)
 add_subdirectory(irtree)

@@ -12,6 +12,7 @@
 
 #include <irtree/nodes/statements/LabelStatement.h>
 #include <irtree/nodes/statements/JumpStatement.h>
+#include <objects/objs_creation/ArrayCreation.h>
 
 IrtMapping IrtreeBuildVisitor::GetTrees() {
   return method_trees_;
@@ -249,16 +250,38 @@ void IrtreeBuildVisitor::Visit(SimpleLvalue *simple_lvalue) {
   tos_value_ = new IRT::ExpressionWrapper(var_expression);
 }
 void IrtreeBuildVisitor::Visit(ArrayElementLvalue *array_element_lvalue) {
-  /// TODO
+  auto var_expression = current_frame_->GetAddress(array_element_lvalue->GetIdentifier());
+  auto index = Accept(array_element_lvalue->GetExpression())->ToExpression();
+
+  auto offset = new IRT::BinopExpression(
+    IRT::BinaryOperatorType::PLUS, var_expression,
+    new IRT::BinopExpression(IRT::BinaryOperatorType::MUL,
+                             new IRT::BinopExpression(IRT::BinaryOperatorType::PLUS,
+                               index,new IRT::ConstExpression(1)),
+                               new IRT::ConstExpression(WORD_SIZE)));
+  var_expression = new IRT::MemExpression(offset);
+  tos_value_ = new IRT::ExpressionWrapper(var_expression);
 }
 void IrtreeBuildVisitor::Visit(AccessToArrayElementExpression *access_to_array_element_expression) {
-  /// TODO
+  auto array_name = Accept(access_to_array_element_expression->GetFirst())->ToExpression();
+  auto index = Accept(access_to_array_element_expression->GetSecond())->ToExpression();
+
+  tos_value_ =
+    new IRT::ExpressionWrapper(new IRT::MemExpression(new IRT::BinopExpression(
+      IRT::BinaryOperatorType::PLUS, array_name, new IRT::BinopExpression(
+        IRT::BinaryOperatorType::MUL,
+        new IRT::BinopExpression(IRT::BinaryOperatorType::PLUS, index,
+                                 new IRT::ConstExpression(1)),
+        new IRT::ConstExpression(WORD_SIZE)))));
 }
 void IrtreeBuildVisitor::Visit(ArrayNewExpression *array_new_expression) {
-  /// TODO
+  auto size_expr = Accept(array_new_expression->GetExpression())->ToExpression();
+  auto array = CreateArray(size_expr);
+  tos_value_ = new IRT::ExpressionWrapper(array);
 }
 void IrtreeBuildVisitor::Visit(ArrayLengthExpression *array_length_expression) {
-  /// TODO
+  auto array_name = Accept(array_length_expression->GetExpression())->ToExpression();
+  tos_value_ = new IRT::ExpressionWrapper(new IRT::MemExpression(array_name)); // Get length from first byte
 }
 void IrtreeBuildVisitor::Visit(BinaryOperatorExpression *binary_operator_expression) {
   auto left = Accept(binary_operator_expression->GetFirst());
@@ -434,7 +457,7 @@ void IrtreeBuildVisitor::Visit(VariableDeclaration *variable_declaration) {
         new IRT::StatementWrapper(new IRT::MoveStatement(expr, value));
     }
   } else {
-    /// TODO - add realization for arrays
+    current_frame_->AddLocalVariable(variable_declaration->GetIdentifier());
   }
 }
 
