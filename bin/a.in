@@ -1,6 +1,0 @@
-class Factorial {
-  public static void main () {
-   int a;
-   a = 1;
-  }
-}

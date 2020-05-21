@@ -36,6 +36,8 @@ int Driver::Evaluate() {
   ClassStorage &storage = ClassStorage::GetInstance();
   for (const auto &cl : classes) {
     std::unordered_map<Symbol, std::shared_ptr<MethodType>> methods;
+    storage.SetClassMethodsNames(cl.first, cl.second->GetMethodNames());
+    storage.SetClassFieldsNames(cl.first, cl.second->GetFieldNames());
     for (const auto &method: cl.second->GetMethodTypes()) {
       methods[method.first] = method.second;
     }

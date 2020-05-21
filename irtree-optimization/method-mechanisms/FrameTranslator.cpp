@@ -75,22 +75,16 @@ Expression *FrameTranslator::GetField(const std::string &name) {
   IRT::Expression *this_ptr = addresses_["this"].top()->ToExpression();
   IRT::Expression *field_ptr;
 
-  auto fields = ClassStorage::GetInstance().GetFields(Symbol(class_name_));
+  auto field_names = ClassStorage::GetInstance().GetFieldsNames(Symbol(class_name_));
   bool is_found = false;
   size_t offset = 0;
 
-  //// TODO - Attention - поля не в том порядке, в котором они должны быть,
-  //// а в том, в котором хранятся в мапе, надо исправить
-  for (const auto& field: fields) {
-    std::cout << field.first.GetName() << std::endl;
-  }
-
-  for (const auto& field: fields) {
-    if (field.first.GetName() == name) {
+  for (const auto& field: field_names) {
+    if (field.GetName() == name) {
       is_found = true;
       break;
     }
-    offset += field.second->GetSize();
+    offset += ClassStorage::GetInstance().GetFields(Symbol(class_name_))[field]->GetSize();
   }
   if (is_found) {
     field_ptr = new MemExpression(

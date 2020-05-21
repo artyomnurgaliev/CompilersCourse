@@ -16,9 +16,15 @@ public:
     std::unordered_map<Symbol,  std::shared_ptr<PrimitiveType>> GetFields(const Symbol& symbol) const;
     ClassStorage(const ClassStorage& other) = delete;
     ClassStorage& operator= (const ClassStorage&) = delete;
-private:
+    std::vector<Symbol> GetMethodsNames(Symbol symbol);
+    void SetClassMethodsNames(const Symbol& symbol, std::vector<Symbol> class_methods_names);
+    std::vector<Symbol> GetFieldsNames(Symbol symbol);
+    void SetClassFieldsNames(const Symbol& symbol, std::vector<Symbol> class_methods_names);
+ private:
     ClassStorage() = default;
     ~ClassStorage() = default;
+    std::unordered_map<Symbol, std::vector<Symbol>> class_methods_names_;
+    std::unordered_map<Symbol, std::vector<Symbol>> class_fields_names_;
     std::unordered_map<Symbol, std::unordered_map<Symbol, std::shared_ptr<MethodType>>> class_methods_;
     std::unordered_map<Symbol, std::unordered_map<Symbol, std::shared_ptr<PrimitiveType>>> class_fields_;
 };

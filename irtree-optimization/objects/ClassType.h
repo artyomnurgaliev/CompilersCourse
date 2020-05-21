@@ -15,11 +15,15 @@ public:
   void AddField(const Symbol& symbol, std::shared_ptr<PrimitiveType> field);
   std::unordered_map<Symbol, std::shared_ptr<MethodType>> GetMethodTypes();
   std::unordered_map<Symbol, std::shared_ptr<PrimitiveType>> GetFieldTypes();
+  std::vector<Symbol> GetFieldNames();
+  std::vector<Symbol> GetMethodNames();
   ClassDeclaration* GetClassDeclaration();
   std::string GetTypeName() override;
   //std::string GetObject() override;
 private:
   ClassDeclaration* class_declaration_;
+  std::vector<Symbol> method_names_;
+  std::vector<Symbol> field_names_;
   std::unordered_map<Symbol, std::shared_ptr<MethodType>> method_types_;
   std::unordered_map<Symbol, std::shared_ptr<PrimitiveType>> field_types_;
   Symbol extends_class_;

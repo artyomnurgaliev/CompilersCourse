@@ -65,9 +65,9 @@ class Offset{
     int b;
 
     public void CheckOffset(Test t1, int c, Test t2, int d) {
-        d = b;
-        t2 = test2;
+        test1 = t1;
         c = a;
-        t1 = test1;
+        test2 = t2;
+        b = d;
     }
 }

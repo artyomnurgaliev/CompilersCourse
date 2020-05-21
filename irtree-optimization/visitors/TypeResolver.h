@@ -1,24 +1,13 @@
 #pragma once
 
-#include <unordered_map>
-#include <symbol_table/ScopeLayer.h>
-#include <symbol_table/ScopeLayerTree.h>
-#include <method-mechanisms/FrameTranslator.h>
+#include <visitors/IrtreeBuildVisitor.h>
 #include "TemplateVisitor.h"
-#include <stack>
-#include <irtree/nodes/statements/Statement.h>
-#include <irtree/tree_wrapper/SubtreeWrapper.h>
-#include <visitors/TypeResolver.h>
+class IrtreeBuildVisitor;
 
-class TypeResolver;
-
-using IrtMapping = std::unordered_map<std::string, IRT::Statement *>;
-
-class TypeResolver;
-
-class IrtreeBuildVisitor : public TemplateVisitor<IRT::SubtreeWrapper *> {
+class TypeResolver : public TemplateVisitor<std::string> {
  public:
-  IrtreeBuildVisitor();
+  explicit TypeResolver(IrtreeBuildVisitor *irtree_build_visitor);
+
   void Visit(SimpleType *simple_type) override;
   void Visit(ArrayType *array_type) override;
   void Visit(AssertStatement *assert_statement) override;
@@ -66,21 +55,7 @@ class IrtreeBuildVisitor : public TemplateVisitor<IRT::SubtreeWrapper *> {
   void Visit(BinaryOperator *binary_operator) override;
   void Visit(Program *program) override;
 
-  IrtMapping GetTrees();
-  void SetTree(ScopeLayerTree *tree);
-  ScopeLayer *GetCurrentLayer() const;
-  const std::string &GetCurrentClassName() const;
-
  private:
-  std::stack<int> offsets_;
-  ScopeLayer *current_layer_;
-  std::string current_class_name_;
-  std::unordered_map<std::string, IRT::FrameTranslator *> frame_translator_;
-  IRT::FrameTranslator *current_frame_;
-  ScopeLayerTree *tree_;
-
-  IrtMapping method_trees_;
-
-  TypeResolver *type_resolver_;
+  IrtreeBuildVisitor *irtree_build_visitor_{};
 };
 

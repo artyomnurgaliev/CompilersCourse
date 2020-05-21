@@ -6,10 +6,12 @@
 
 #include <utility>
 void FormalList::AddFormal(Formal* formal) {
-  formals_.push_back(formal);
+  formals_.push_front(formal);
 }
 void FormalList::Accept(Visitor *visitor) {visitor->Visit(this);}
-const std::vector<Formal*> &FormalList::GetFormals() const { return formals_; }
+const std::deque<Formal*> &FormalList::GetFormals() const {
+  return formals_;
+}
 int FormalList::GetSize() {
   return formals_.size();
 }

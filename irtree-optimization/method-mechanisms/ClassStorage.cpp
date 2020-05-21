@@ -30,3 +30,15 @@ std::unordered_map<Symbol,  std::shared_ptr<PrimitiveType>> ClassStorage::GetFie
   }
 }
 
+std::vector<Symbol> ClassStorage::GetMethodsNames(Symbol symbol) {
+  return class_methods_names_[symbol];
+}
+void ClassStorage::SetClassMethodsNames(const Symbol& symbol, std::vector<Symbol> class_methods_names) {
+  class_methods_names_[symbol] = std::move(class_methods_names);
+}
+std::vector<Symbol> ClassStorage::GetFieldsNames(Symbol symbol) {
+  return class_fields_names_[symbol];
+}
+void ClassStorage::SetClassFieldsNames(const Symbol& symbol, std::vector<Symbol> class_fields_names) {
+  class_fields_names_[symbol] = std::move(class_fields_names);
+}
