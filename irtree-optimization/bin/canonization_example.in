@@ -1,0 +1,43 @@
+class Factorial {
+  public static void main () {
+    return 0;
+  }
+}
+
+class Funcs {
+    int a;
+    public int Func1() {
+        return 1;
+    }
+    public int Func2() {
+        return 2;
+    }
+    public int Func3(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+
+class DoubleCall {
+    Funcs f;
+    public int DoubleCallFunc() {
+        return (f.Func1() * f.Func2());
+    }
+}
+class ESEQ {
+    int[] a;
+    public void EseqFunc() {
+        a = new int[10];
+    }
+}
+
+class Linear {
+    Funcs f;
+    public void LinearizedFunc() {
+       if (f.Func1() == 1) {
+            if (f.Func2() == 2) {
+                int a;
+            }
+       }
+    }
+}
+

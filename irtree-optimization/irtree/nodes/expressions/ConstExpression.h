@@ -10,6 +10,7 @@ namespace IRT {
 
 class ConstExpression : public Expression {
  public:
+  bool IsCONST() override;
   explicit ConstExpression(int value);
   ~ConstExpression() final = default;
   int Value() const;

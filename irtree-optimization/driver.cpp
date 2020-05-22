@@ -5,6 +5,9 @@
 #include <visitors/SymbolTreeVisitor.h>
 #include <include/driver.hh>
 #include <method-mechanisms/ClassStorage.h>
+#include <irtree/visitors/DoubleCallEliminateVisitor.h>
+#include <irtree/visitors/ESEQEliminateVisitor.h>
+#include <irtree/visitors/Linearizer.h>
 
 Driver::Driver() :
   trace_parsing(false),
@@ -74,6 +77,34 @@ int Driver::Evaluate() {
   for (auto func_view = methods.begin(); func_view != methods.end(); ++func_view) {
     IRT::PrintVisitor print_visitor_irt(func_view->first + "_irt.txt");
     methods[func_view->first]->Accept(&print_visitor_irt);
+
+
+    /// =====================================================================================
+    IRT::DoubleCallEliminateVisitor call_eliminate_visitor;
+    methods[func_view->first]->Accept(&call_eliminate_visitor);
+
+    auto stmt_result = call_eliminate_visitor.GetTree();
+
+    IRT::PrintVisitor print_visitor_two(func_view->first + "_without_double_call.txt");
+    stmt_result->Accept(&print_visitor_two);
+
+    /// ======================================================================================
+    IRT::ESEQEliminateVisitor eseq_eliminate_visitor;
+    methods[func_view->first]->Accept(&eseq_eliminate_visitor);
+
+    stmt_result = eseq_eliminate_visitor.GetTree();
+
+    IRT::PrintVisitor print_visitor_three(func_view->first + "_without_eseq.txt");
+    stmt_result->Accept(&print_visitor_three);
+
+    /// ======================================================================================
+    IRT::Linearizer linearizer;
+    methods[func_view->first]->Accept(&linearizer);
+
+    stmt_result = linearizer.GetTree();
+
+    IRT::PrintVisitor print_visitor_four(func_view->first + "_linearized.txt");
+    stmt_result->Accept(&print_visitor_four);
   }
   return 0;
 }

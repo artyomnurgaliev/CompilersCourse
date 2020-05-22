@@ -3,20 +3,13 @@
 #add_subdirectory(tree_wrapper)
 
 set(SOURCES generators/Label.cpp
-        visitors/BaseElements.h
-        visitors/PrintVisitor.h
-        visitors/PrintVisitor.cpp
-        visitors/Visitor.h
-        types/BinaryOperatorType.h
-        types/BinaryOperatorType.cpp
-        types/LogicOperatorType.h
-        types/LogicOperatorType.cpp
         generators/Label.h
         generators/Temporary.cpp
         generators/Temporary.h
         tree_wrapper/SubtreeWrapper.h
         nodes/expressions/Expression.h
-        nodes/BaseElement.h visitors/Visitor.h
+        nodes/BaseElement.h
+        visitors/Visitor.h
         nodes/statements/Statement.h
         tree_wrapper/ExpressionWrapper.cpp
         tree_wrapper/ExpressionWrapper.h
@@ -24,8 +17,7 @@ set(SOURCES generators/Label.cpp
         nodes/statements/ExpStatement.h
         nodes/expressions/ConstExpression.cpp
         nodes/expressions/ConstExpression.h
-        types/LogicOperatorType.h
-        types/BinaryOperatorType.h
+        types/LogicOperatorType.h types/BinaryOperatorType.h
         nodes/statements/JumpConditionalStatement.cpp
         nodes/statements/JumpConditionalStatement.h
         tree_wrapper/StatementWrapper.cpp
@@ -60,9 +52,19 @@ set(SOURCES generators/Label.cpp
         nodes/expressions/NameExpression.h
         tree_wrapper/conditional_wrappers/RelativeConditionalWrapper.cpp
         tree_wrapper/conditional_wrappers/RelativeConditionalWrapper.h
-        types/LogicOperatorType.cpp types/BinaryOperatorType.cpp
-        visitors/PrintVisitor.cpp visitors/PrintVisitor.h
-        visitors/BaseElements.h nodes/expressions/EseqExpression.cpp
-        nodes/expressions/EseqExpression.h consts.h)
+        types/LogicOperatorType.cpp
+        types/BinaryOperatorType.cpp
+        visitors/PrintVisitor.cpp
+        visitors/PrintVisitor.h
+        visitors/BaseElements.h
+        nodes/expressions/EseqExpression.cpp
+        nodes/expressions/EseqExpression.h
+        visitors/TemplateVisitor.cpp
+        visitors/TemplateVisitor.h
+        visitors/VisitorStruct.h
+        visitors/DoubleCallEliminateVisitor.cpp
+        visitors/DoubleCallEliminateVisitor.h
+        visitors/ESEQEliminateVisitor.cpp
+        visitors/ESEQEliminateVisitor.h visitors/Linearizer.cpp visitors/Linearizer.h)
 
 add_library(${IR_LIB} ${SOURCES})

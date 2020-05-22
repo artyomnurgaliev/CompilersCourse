@@ -11,3 +11,6 @@ void IRT::EseqExpression::Accept(IRT::Visitor *visitor) {
   visitor->Visit(this);
 
 }
+bool IRT::EseqExpression::IsESEQ() {
+  return true;
+}

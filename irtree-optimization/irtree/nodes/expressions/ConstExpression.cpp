@@ -15,3 +15,6 @@ IRT::ConstExpression::ConstExpression(int value): value_(value) {
 int IRT::ConstExpression::Value() const {
   return value_;
 }
+bool IRT::ConstExpression::IsCONST() {
+  return true;
+}

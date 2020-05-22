@@ -13,6 +13,7 @@ namespace IRT {
 
 class ExpStatement : public Statement {
  public:
+  bool IsExp() override;
   explicit ExpStatement(Expression* expression);
   Expression* GetExpression();
   ~ExpStatement() override = default;

@@ -13,5 +13,8 @@ void NameExpression::Accept(Visitor *visitor) {
 NameExpression::NameExpression(Label label): label_(label) {
 
 }
+bool NameExpression::IsNAME() {
+  return true;
+}
 
 }

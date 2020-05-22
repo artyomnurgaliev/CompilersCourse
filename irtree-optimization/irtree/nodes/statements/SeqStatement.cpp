@@ -12,4 +12,7 @@ void SeqStatement::Accept(Visitor *visitor) {
 SeqStatement::SeqStatement(Statement *first, Statement *second): first_statement_(first), second_statement_(second) {
 
 }
+bool SeqStatement::IsSeq() {
+  return true;
+}
 }

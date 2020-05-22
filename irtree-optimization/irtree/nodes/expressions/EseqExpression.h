@@ -11,6 +11,7 @@ namespace IRT {
 
 class EseqExpression: public Expression {
  public:
+  bool IsESEQ() override;
   EseqExpression(Statement* statement, Expression* expression);
   void Accept(Visitor *visitor) override;
 

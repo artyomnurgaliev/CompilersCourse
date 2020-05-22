@@ -18,3 +18,6 @@ void ExpStatement::Accept(Visitor *visitor) {
   visitor->Visit(this);
 
 }
+bool ExpStatement::IsExp() {
+  return true;
+}

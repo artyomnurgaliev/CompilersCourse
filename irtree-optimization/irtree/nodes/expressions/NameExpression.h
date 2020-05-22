@@ -10,6 +10,7 @@
 namespace IRT {
 class NameExpression : public Expression {
  public:
+  bool IsNAME() override;
   NameExpression(Label label);
   void Accept(Visitor *visitor) override;
   Label label_;

@@ -516,10 +516,11 @@ void IrtreeBuildVisitor::Visit(TypeIdentifier *type_identifier) {
 void IrtreeBuildVisitor::Visit(MethodInvocation *method_invocation) {
   auto *irt_expressions = new IRT::ExpressionList();
   irt_expressions->Add(Accept(method_invocation->GetExpression())->ToExpression());
-
-  irt_expressions->Add(Accept(method_invocation->GetFirst())->ToExpression());
-  for (auto it : method_invocation->GetExpressionList()->GetExpressions()) {
-    irt_expressions->Add(Accept(it)->ToExpression());
+  if (method_invocation->GetFirst() != nullptr) {
+    irt_expressions->Add(Accept(method_invocation->GetFirst())->ToExpression());
+    for (auto it : method_invocation->GetExpressionList()->GetExpressions()) {
+      irt_expressions->Add(Accept(it)->ToExpression());
+    }
   }
   std::string class_name = type_resolver_->Accept(method_invocation->GetExpression());
   tos_value_ = new IRT::ExpressionWrapper(new IRT::CallExpression(new IRT::NameExpression
