@@ -68,18 +68,8 @@ void IRT::Linearizer::Visit(IRT::CallExpression *call_expression) {
   auto func = Accept(call_expression->function_name_).expression_;
   auto args = Accept(call_expression->args_).expression_list_;
 
-  Temporary temp;
-
-  tos_value_.expression_ = new EseqExpression(
-    new MoveStatement(
-      new TempExpression(temp),
-      new CallExpression(
-        func,
-        args
-      )
-    ),
-    new TempExpression(temp)
-  );
+  tos_value_.expression_ =
+    new CallExpression(func, args);
 }
 void IRT::Linearizer::Visit(IRT::ExpressionList *expression_list) {
   auto expression_list_ = new ExpressionList();

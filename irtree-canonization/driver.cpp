@@ -90,18 +90,22 @@ int Driver::Evaluate() {
 
     /// ======================================================================================
     IRT::ESEQEliminateVisitor eseq_eliminate_visitor;
-    methods[func_view->first]->Accept(&eseq_eliminate_visitor);
 
-    stmt_result = eseq_eliminate_visitor.GetTree();
+    for (int i = 0; i < 10; ++i) {
+      stmt_result->Accept(&eseq_eliminate_visitor);
+      stmt_result = eseq_eliminate_visitor.GetTree();
+    }
 
     IRT::PrintVisitor print_visitor_three(func_view->first + "_without_eseq.txt");
     stmt_result->Accept(&print_visitor_three);
 
     /// ======================================================================================
     IRT::Linearizer linearizer;
-    methods[func_view->first]->Accept(&linearizer);
 
-    stmt_result = linearizer.GetTree();
+    for (int i = 0; i < 10; ++i) {
+      stmt_result->Accept(&linearizer);
+      stmt_result = linearizer.GetTree();
+    }
 
     IRT::PrintVisitor print_visitor_four(func_view->first + "_linearized.txt");
     stmt_result->Accept(&print_visitor_four);
